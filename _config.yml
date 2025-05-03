@@ -1,7 +1,28 @@
 title: My Math & ML Site
-description: A GitHub Pages site for math-based topics
-theme: minima
+description: A GitHub Pages site for math-based academic topics
+remote_theme: mmistakes/minimal-mistakes
+plugins:
+  - jekyll-remote-theme
+  - jekyll-paginate
+  - jekyll-sitemap
+  - jekyll-feed
+  - jekyll-include-cache
+
 markdown: kramdown
 kramdown:
-  math_engine: mathjax
   input: GFM
+  math_engine: mathjax
+
+include:
+  - _pages
+
+defaults:
+  - scope:
+      path: ""
+      type: "pages"
+    values:
+      layout: single
+      mathjax: true
+      author_profile: false
+      toc: true
+      toc_sticky: true
