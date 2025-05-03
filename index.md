@@ -7,6 +7,6 @@ mathjax: true
 
 Welcome! Explore the topics below:
 
-- [Machine Learning](ml/intro.html)
+- [Linear Algebra](linear-algebra/subspaces.html)
 - [Optimization](optimization/intro.html)
 - [Causal Inference](causal-inference/intro.html)
