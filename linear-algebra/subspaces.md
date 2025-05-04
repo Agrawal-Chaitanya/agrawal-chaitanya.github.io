@@ -9,124 +9,146 @@ mathjax: true
 ---
 
 Notes:
-1. What does matrix multiplication with vector mean? How does it transform the vector
+1. What does matrix multiplication with a vector mean? How does it transform the vector?
 2. Linear Functions
 
 ## Types of subspaces
 
 ### 1. Null subspace
 
-Given $ A \in \mathbb{R}^{m \times n} $, we define null space of $A$ as: $$ N(A) = \{x \in \mathbb{R}^n | Ax = 0\} $$
+Given $A \in \mathbb{R}^{m \times n}$, we define the null space of $A$ as:
 
+$$
+N(A) = \{ x \in \mathbb{R}^n \mid Ax = 0 \}
+$$
 
-In easier terms, $N(A)$ is all solutions $x \in \mathbb{R}^n;\ x = \begin{bmatrix}
-x_{1}\\
-x_{2}\\
-\vdots\\
-x_{n}\end{bmatrix}$ to equation $Ax = 0$.
+In easier terms, $N(A)$ is all solutions $x \in \mathbb{R}^n$, where:
 
-Let's look at $N(A)$ from another perspective.
-We can represent its rows as row vectors: 
-$$A = \begin{pmatrix}
-a^T_{1}\\
-a^T_{2}\\
-a^T_{3}\\
-\vdots\\
+$$
+x = \begin{bmatrix}
+x_{1} \\
+x_{2} \\
+\vdots \\
+x_{n}
+\end{bmatrix}
+$$
+
+such that $Ax = 0$.
+
+Let's look at $N(A)$ from another perspective.  
+We can represent its rows as row vectors:
+
+$$
+A = \begin{pmatrix}
+a^T_{1} \\
+a^T_{2} \\
+a^T_{3} \\
+\vdots \\
 a^T_{m}
-\end{pmatrix} $$
-where $a^T_i$ is the transpose of the $i^{th}$ row vector ($a_i$ is a column vector in $\mathbb{R}^n$).<br>
-Now, when we compute $Ax$, we are essentially taking the dot product of each row of $A$ with the matrix $x$.
+\end{pmatrix}
+$$
 
-$$Ax = \begin{pmatrix}
-a^T_{1} x\\
-a^T_{2} x\\
-a^T_{3} x\\
-\vdots\\
-a^T_{m} x\\
-\end{pmatrix} = \begin{pmatrix}
-a_{1} .x\\
-a_{2} .x\\
-a_{3} .x\\
-\vdots\\
-a_{m} .x\\
-\end{pmatrix}$$
+where $a^T_i$ is the transpose of the $i^{\text{th}}$ row vector ($a_i$ is a column vector in $\mathbb{R}^n$).  
+Now, when we compute $Ax$, we are essentially taking the dot product of each row of $A$ with the vector $x$:
 
-For $x$ to be in the $N(A)$, we must have $Ax = 0$.This means
+$$
+Ax = \begin{pmatrix}
+a^T_{1} x \\
+a^T_{2} x \\
+a^T_{3} x \\
+\vdots \\
+a^T_{m} x
+\end{pmatrix}
+= 
+\begin{pmatrix}
+a_{1} \cdot x \\
+a_{2} \cdot x \\
+a_{3} \cdot x \\
+\vdots \\
+a_{m} \cdot x
+\end{pmatrix}
+$$
 
-$$\begin{pmatrix}
-a_{1} .x\\
-a_{2} .x\\
-a_{3} .x\\
-\vdots\\
-a_{m} .x\\
-\end{pmatrix}= \begin{pmatrix}
-0\\
-0\\
-0\\
-\vdots\\
+For $x$ to be in the null space $N(A)$, we must have $Ax = 0$. This means:
+
+$$
+\begin{pmatrix}
+a_{1} \cdot x \\
+a_{2} \cdot x \\
+a_{3} \cdot x \\
+\vdots \\
+a_{m} \cdot x
+\end{pmatrix}
+=
+\begin{pmatrix}
+0 \\
+0 \\
+0 \\
+\vdots \\
 0
-\end{pmatrix}$$
+\end{pmatrix}
+$$
 
 This set of equations implies that for every row vector $a_i$ of $A$, the dot product with $x$ must be zero:
 
-$$a_i.x = 0$$
-for all $i = 1, 2, 3,..., m $
+$$
+a_i \cdot x = 0 \quad \text{for all } i = 1, 2, 3, \dots, m
+$$
 
-Since we know that dot product of two vectors being zero means that the vectors are orthogonal to each other. <b>Therefore, a vector $x$ is in the null space of $A$ if and only if $x$ is orthogonal to every row vector of the matrix A.</b>
+Since we know that the dot product of two vectors being zero means the vectors are orthogonal to each other,  
+**a vector $x$ is in the null space of $A$ if and only if $x$ is orthogonal to every row vector of matrix $A$.**
 
-<b> Notes: </b>
+**Notes:**
 
-- <b>Row Space :</b> The row space of $A$, denoted as $Row(A)$, is the span of row vectors of $A$. Since $x$ is orthogonal to each row vector, it must also be orthogonal to any linear combinations of the row vectos. This means that $N(A)$ is orthogonal to the entire row space of $A$. We can write this as:
+- **Row Space:**  
+  The row space of $A$, denoted as $\text{Row}(A)$, is the span of the row vectors of $A$.  
+  Since $x$ is orthogonal to each row vector, it must also be orthogonal to any linear combination of the row vectors.  
+  This means that $N(A)$ is orthogonal to the entire row space of $A$. We can write this as:
 
-$$N(A) \perp Row(A)$$
+  $$
+  N(A) \perp \text{Row}(A)
+  $$
 
+**Example**:
 
-
-
-\
-<b>Example</b>:
-
-$$Ax = \begin{bmatrix}
-1 & 1 & 2\\
-2 & 1 & 3\\
-3 & 1 & 4\\
-4 & 1 & 5\end{bmatrix}
+$$
+Ax =
 \begin{bmatrix}
-x_{1}\\
-x_{2}\\
-x_{3}\end{bmatrix} = \begin{bmatrix}
-0\\
-0\\
-0\\
-0\end{bmatrix}$$
+1 & 1 & 2 \\
+2 & 1 & 3 \\
+3 & 1 & 4 \\
+4 & 1 & 5
+\end{bmatrix}
+\begin{bmatrix}
+x_{1} \\
+x_{2} \\
+x_{3}
+\end{bmatrix}
+=
+\begin{bmatrix}
+0 \\
+0 \\
+0 \\
+0
+\end{bmatrix}
+$$
 
-The solutions to this system of linear equations are as follow:
-$$x = t \begin{bmatrix}
-1\\
-1\\
--1\end{bmatrix}, t \in \mathbb{R}$$
-Here, we can observe that  $x = \begin{bmatrix}
-0\\
-0\\
-0\end{bmatrix}$ is one of the solutions, which means that $N(A)$ is a line passing through origin.
+The solutions to this system of linear equations are:
 
+$$
+x = t \begin{bmatrix}
+1 \\
+1 \\
+-1
+\end{bmatrix}, \quad t \in \mathbb{R}
+$$
 
-<br>
-<br>
-<br>
-<br>
+Here, we can observe that $x = \begin{bmatrix} 0 \\ 0 \\ 0 \end{bmatrix}$ is one of the solutions, which means that $N(A)$ is a line passing through the origin.
 
+<br><br><br>
 
+Finally, we can also write the null space as the orthogonal complement of the row space:
 
-
-
-
-
-$$ N(A) = (R({A}^T))^\perp $$
-
-
-
-
-
-
-
+$$
+N(A) = \left( R(A^T) \right)^\perp
+$$
