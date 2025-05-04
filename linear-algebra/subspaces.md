@@ -2,10 +2,10 @@
 title: Introduction to Linear Algebra
 layout: single
 permalink: /linear-algebra/subspaces/
-mathjax: true
 toc: true
 toc_label: "On this page"
 toc_sticky: true
+mathjax: true
 ---
 
 Notes:
