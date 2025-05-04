@@ -7,10 +7,15 @@ toc: true
 toc_label: "On this page"
 toc_sticky: true
 ---
+## Types of subspaces
 
-<h3> Types of subspaces </h3>
+### 1. Null subspace
 
-- Null subspace
+We have matrix \(A \in \mathb{R}^{m \times n} \)
+
+
+
+
 - Column subspace
 
 
