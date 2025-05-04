@@ -1,4 +1,6 @@
-
+---
+layout: default
+---
 
 <!-- <!DOCTYPE html>
 <html lang="en">
@@ -43,9 +45,7 @@
   </body>
 </html> -->
 
----
-layout: default
----
+
 
 {% if page.header.overlay_color or page.header.overlay_image or page.header.image %}
   {% include page__hero.html %}
@@ -81,24 +81,6 @@ layout: default
           </h1>
           {%- endif %}
           {% include page__meta.html %}
-          {% if page.mathjax %}
-          <script>
-            window.MathJax = {
-              tex: {
-                inlineMath: [['$', '$'], ['\\(', '\\)']],
-                displayMath: [['$$', '$$'], ['\\[', '\\]']]
-              },
-              options: {
-                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-                ignoreHtmlClass: 'tex2jax_ignore',
-                processHtmlClass: 'tex2jax_process'
-              }
-            };
-          </script>
-          <script id="MathJax-script" async
-            src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
-          </script>
-          {% endif %}
         </header>
       {% endunless %}
 
