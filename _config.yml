@@ -1,6 +1,15 @@
+# Theme Settings
+remote_theme: mmistakes/minimal-mistakes
+minimal_mistakes_skin: "default" # "air", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum", "sunrise"
+
+# Site Settings
 title: My Math & ML Site
 description: A GitHub Pages site for math-based academic topics
-remote_theme: mmistakes/minimal-mistakes
+url: "https://agrawal-chaitanya.github.io" # add your site URL
+baseurl: "" # leave empty if hosting at root
+locale: "en-US"
+
+# Plugins
 plugins:
   - jekyll-remote-theme
   - jekyll-paginate
@@ -9,11 +18,14 @@ plugins:
   - jekyll-include-cache
   - jekyll-toc
 
+# Build settings
 markdown: kramdown
 kramdown:
   input: GFM
   math_engine: mathjax
+  syntax_highlighter: rouge
 
+# File Inclusions
 include:
   - _pages
 
