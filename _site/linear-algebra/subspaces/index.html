@@ -1,0 +1,424 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.27.1 by Michael Rose
+  Copyright 2013-2025 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="en-US" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Introduction to Linear Algebra - Intuitive Maths</title>
+<meta name="description" content="A website to learn maths intuitively">
+
+
+  <meta name="author" content="Chaitanya Agrawal">
+  
+
+
+<meta property="og:type" content="website">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Intuitive Maths">
+<meta property="og:title" content="Introduction to Linear Algebra">
+<meta property="og:url" content="http://localhost:4000/linear-algebra/subspaces/">
+
+
+  <meta property="og:description" content="A website to learn maths intuitively">
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="http://localhost:4000/linear-algebra/subspaces/">
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Intuitive Maths Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Intuitive Maths
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="https://mmistakes.github.io/minimal-mistakes/docs/quick-start-guide/"
+                
+                
+              >Quick-Start Guide</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+<script>
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      displayMath: [['$$', '$$'], ['\\[', '\\]']],
+      packages: ['base', 'ams']
+    },
+    loader: {
+      load: ['[tex]/ams']
+    },
+    svg: {
+      fontCache: 'global'
+    }
+  };
+</script>
+<script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+</script>
+
+
+
+
+
+
+
+
+<div id="main" role="main">
+  
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Introduction to Linear Algebra">
+    
+    
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">
+            <a href="http://localhost:4000/linear-algebra/subspaces/" itemprop="url">Introduction to Linear Algebra
+</a>
+          </h1>
+          
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On this page</h4></header>
+              <ul class="toc__menu"><li><a href="#types-of-subspaces">Types of subspaces</a><ul><li><a href="#1-null-subspace">1. Null subspace</a></li></ul></li></ul>
+            </nav>
+          </aside>
+        
+        <p>Notes:</p>
+<ol>
+  <li>What does matrix multiplication with a vector mean? How does it transform the vector?</li>
+  <li>Linear Functions</li>
+</ol>
+
+<h2 id="types-of-subspaces">Types of subspaces</h2>
+
+<h3 id="1-null-subspace">1. Null subspace</h3>
+
+<p>Given $A \in \mathbb{R}^{m \times n}$, we define the null space of $A$ as:</p>
+
+\[N(A) = \{ x \in \mathbb{R}^n \mid Ax = 0 \}\]
+
+<p>In easier terms, $N(A)$ is all solutions $x \in \mathbb{R}^n$, where:</p>
+
+\[x = \begin{bmatrix}
+x_{1} \\
+x_{2} \\
+\vdots \\
+x_{n}
+\end{bmatrix}\]
+
+<p>such that $Ax = 0$.</p>
+
+<p>Let’s look at $N(A)$ from another perspective.<br />
+We can represent its rows as row vectors:</p>
+
+\[A = \begin{pmatrix}
+a^T_{1} \\
+a^T_{2} \\
+a^T_{3} \\
+\vdots \\
+a^T_{m}
+\end{pmatrix}\]
+
+<p>where $a^T_i$ is the transpose of the $i^{\text{th}}$ row vector ($a_i$ is a column vector in $\mathbb{R}^n$).<br />
+Now, when we compute $Ax$, we are essentially taking the dot product of each row of $A$ with the vector $x$:</p>
+
+\[Ax = \begin{pmatrix}
+a^T_{1} x \\
+a^T_{2} x \\
+a^T_{3} x \\
+\vdots \\
+a^T_{m} x
+\end{pmatrix}
+= 
+\begin{pmatrix}
+a_{1} \cdot x \\
+a_{2} \cdot x \\
+a_{3} \cdot x \\
+\vdots \\
+a_{m} \cdot x
+\end{pmatrix}\]
+
+<p>For $x$ to be in the null space $N(A)$, we must have $Ax = 0$. This means:</p>
+
+\[\begin{pmatrix}
+a_{1} \cdot x \\
+a_{2} \cdot x \\
+a_{3} \cdot x \\
+\vdots \\
+a_{m} \cdot x
+\end{pmatrix}
+=
+\begin{pmatrix}
+0 \\
+0 \\
+0 \\
+\vdots \\
+0
+\end{pmatrix}\]
+
+<p>This set of equations implies that for every row vector $a_i$ of $A$, the dot product with $x$ must be zero:</p>
+
+\[a_i \cdot x = 0 \quad \text{for all } i = 1, 2, 3, \dots, m\]
+
+<p>Since we know that the dot product of two vectors being zero means the vectors are orthogonal to each other,<br />
+<strong>a vector $x$ is in the null space of $A$ if and only if $x$ is orthogonal to every row vector of matrix $A$.</strong></p>
+
+<p><strong>Notes:</strong></p>
+
+<ul>
+  <li>
+    <p><strong>Row Space:</strong><br />
+The row space of $A$, denoted as $\text{Row}(A)$, is the span of the row vectors of $A$.<br />
+Since $x$ is orthogonal to each row vector, it must also be orthogonal to any linear combination of the row vectors.<br />
+This means that $N(A)$ is orthogonal to the entire row space of $A$. We can write this as:</p>
+
+\[N(A) \perp \text{Row}(A)\]
+  </li>
+</ul>
+
+<p><strong>Example</strong>:</p>
+
+\[Ax =
+\begin{bmatrix}
+1 &amp; 1 &amp; 2 \\
+2 &amp; 1 &amp; 3 \\
+3 &amp; 1 &amp; 4 \\
+4 &amp; 1 &amp; 5
+\end{bmatrix}
+\begin{bmatrix}
+x_{1} \\
+x_{2} \\
+x_{3}
+\end{bmatrix}
+=
+\begin{bmatrix}
+0 \\
+0 \\
+0 \\
+0
+\end{bmatrix}\]
+
+<p>The solutions to this system of linear equations are:</p>
+
+\[x = t \begin{bmatrix}
+1 \\
+1 \\
+-1
+\end{bmatrix}, \quad t \in \mathbb{R}\]
+
+<p>Here, we can observe that $x = \begin{bmatrix} 0 \ 0 \ 0 \end{bmatrix}$ is one of the solutions, which means that $N(A)$ is a line passing through the origin.</p>
+
+<p><br /><br /><br /></p>
+
+<p>Finally, we can also write the null space as the orthogonal complement of the row space:</p>
+
+\[N(A) = \left( R(A^T) \right)^\perp\]
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/tags/#linear-algebra" class="page__taxonomy-item p-category" rel="tag">Linear Algebra</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/categories/#mathematics" class="page__taxonomy-item p-category" rel="tag">Mathematics</a>
+    
+    </span>
+  </p>
+
+
+        
+
+      </footer>
+
+      
+
+      
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+      
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2025 <a href="http://localhost:4000">Intuitive Maths</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

@@ -5,7 +5,13 @@ permalink: /linear-algebra/subspaces/
 toc: true
 toc_label: "On this page"
 toc_sticky: true
+toc_icon: "file-alt"
 mathjax: true
+categories:
+  - Mathematics
+tags:
+ - Linear Algebra
+
 ---
 
 Notes:
