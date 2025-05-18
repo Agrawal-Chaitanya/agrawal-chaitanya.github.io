@@ -10,7 +10,7 @@
   <head>
     <meta charset="utf-8">
 
-<!-- begin _includes/seo.html --><title>Introduction to Linear Algebra - Intuitive Maths</title>
+<!-- begin _includes/seo.html --><title>Subspaces - Intuitive Maths</title>
 <meta name="description" content="A website to learn maths intuitively">
 
 
@@ -21,7 +21,7 @@
 <meta property="og:type" content="website">
 <meta property="og:locale" content="en_US">
 <meta property="og:site_name" content="Intuitive Maths">
-<meta property="og:title" content="Introduction to Linear Algebra">
+<meta property="og:title" content="Subspaces">
 <meta property="og:url" content="http://localhost:4000/linear-algebra/subspaces/">
 
 
@@ -154,7 +154,7 @@
 
 
   <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
-    <meta itemprop="headline" content="Introduction to Linear Algebra">
+    <meta itemprop="headline" content="Subspaces">
     
     
     
@@ -163,7 +163,7 @@
       
         <header>
           <h1 id="page-title" class="page__title" itemprop="headline">
-            <a href="http://localhost:4000/linear-algebra/subspaces/" itemprop="url">Introduction to Linear Algebra
+            <a href="http://localhost:4000/linear-algebra/subspaces/" itemprop="url">Subspaces
 </a>
           </h1>
           
@@ -185,9 +185,10 @@
 <ol>
   <li>What does matrix multiplication with a vector mean? How does it transform the vector?</li>
   <li>Linear Functions</li>
+  <li>Geometrical interpretation of subspaces
+    <h2 id="types-of-subspaces">Types of subspaces</h2>
+  </li>
 </ol>
-
-<h2 id="types-of-subspaces">Types of subspaces</h2>
 
 <h3 id="1-null-subspace">1. Null subspace</h3>
 
@@ -195,19 +196,12 @@
 
 \[N(A) = \{ x \in \mathbb{R}^n \mid Ax = 0 \}\]
 
-<p>In easier terms, $N(A)$ is all solutions $x \in \mathbb{R}^n$, where:</p>
-
-\[x = \begin{bmatrix}
+<p>In easier terms, $N(A)$ is all solutions $x \in \mathbb{R}^n$, where \(x = \begin{bmatrix}
 x_{1} \\
 x_{2} \\
 \vdots \\
 x_{n}
-\end{bmatrix}\]
-
-<p>such that $Ax = 0$.</p>
-
-<p>Let’s look at $N(A)$ from another perspective.<br />
-We can represent its rows as row vectors:</p>
+\end{bmatrix}\) such that $Ax = 0$. Let’s look at $N(A)$ from another perspective. We can represent its rows as row vectors:</p>
 
 \[A = \begin{pmatrix}
 a^T_{1} \\
@@ -261,14 +255,27 @@ a_{m} \cdot x
 <p>Since we know that the dot product of two vectors being zero means the vectors are orthogonal to each other,<br />
 <strong>a vector $x$ is in the null space of $A$ if and only if $x$ is orthogonal to every row vector of matrix $A$.</strong></p>
 
+<p>Intuitively, we can think of null space of a linear transformation (or a matrix that represents it) as the set of “invisible” input vectors. Let’s break it down further:</p>
+<ul>
+  <li><b> Linear Transformation as a mapping: </b> Imagine a linear trasnformation as a function that takes an input vector and transforms it into an output vector in a (possibly) different vector space. Its like a machine that takes something in and spits something else out.</li>
+  <li><b> The Zero Vector as the “Target”: </b> The zero vector in the output space is a special “target”.</li>
+  <li><b> Null Space - The Inputs that Vanish:</b> The null space is the collection of all the vectors when fed into this “machine” (the linear transformation) get squashed down and become the zero vector in the output space. They are the inputs that the transformation “annihilates” or makes “null”.</li>
+</ul>
+
+<p><b> Example: </b></p>
+<ol>
+  <li>When we project a 3D object onto a 2D plane, all the information about the object’s depth (the component perpendicular to the plane) is lost and maps to zero in that dimension on the 2D plane. The vectors representing that “depth-only” information would be in the null space of the projection transformation.</li>
+</ol>
+
+<p>In essence, the null space tells you about the “loss of information” inherent in the linear transformation. If the null space only contains the zero vector, it means the transformation is “one-to-one” – every distinct input vector gets mapped to a distinct output vector, and no information is lost in that sense. However, if the null space contains non-zero vectors, it means there are different input vectors that end up at the same output vector (specifically, the zero vector), indicating some information is being “lost” or “ignored” by the transformation.
+So, the null space is a fundamental concept that helps us understand which input vectors are “invisible” to a particular linear transformation because they get mapped to zero. It reveals the non-uniqueness of inputs that lead to a specific output (especially the zero output) and provides insights into the structure and properties of the linear transformation itself.</p>
+
 <p><strong>Notes:</strong></p>
 
 <ul>
   <li>
     <p><strong>Row Space:</strong><br />
-The row space of $A$, denoted as $\text{Row}(A)$, is the span of the row vectors of $A$.<br />
-Since $x$ is orthogonal to each row vector, it must also be orthogonal to any linear combination of the row vectors.<br />
-This means that $N(A)$ is orthogonal to the entire row space of $A$. We can write this as:</p>
+The row space of $A$, denoted as $\text{Row}(A)$, is the span of the row vectors of $A$. Since $x$ is orthogonal to each row vector, it must also be orthogonal to any linear combination of the row vectors. This means that $N(A)$ is orthogonal to the entire row space of $A$. We can write this as:</p>
 
 \[N(A) \perp \text{Row}(A)\]
   </li>
@@ -311,6 +318,7 @@ x_{3}
 <p>Finally, we can also write the null space as the orthogonal complement of the row space:</p>
 
 \[N(A) = \left( R(A^T) \right)^\perp\]
+
 
         
       </section>
