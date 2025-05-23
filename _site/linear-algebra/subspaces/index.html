@@ -10,7 +10,7 @@
   <head>
     <meta charset="utf-8">
 
-<!-- begin _includes/seo.html --><title>Subspaces - Intuitive Maths</title>
+<!-- begin _includes/seo.html --><title>Understanding the Null Space – From Geometry to ML Applications - Intuitive Maths</title>
 <meta name="description" content="A website to learn maths intuitively">
 
 
@@ -21,7 +21,7 @@
 <meta property="og:type" content="website">
 <meta property="og:locale" content="en_US">
 <meta property="og:site_name" content="Intuitive Maths">
-<meta property="og:title" content="Subspaces">
+<meta property="og:title" content="Understanding the Null Space – From Geometry to ML Applications">
 <meta property="og:url" content="http://localhost:4000/linear-algebra/subspaces/">
 
 
@@ -154,7 +154,7 @@
 
 
   <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
-    <meta itemprop="headline" content="Subspaces">
+    <meta itemprop="headline" content="Understanding the Null Space – From Geometry to ML Applications">
     
     
     
@@ -163,7 +163,7 @@
       
         <header>
           <h1 id="page-title" class="page__title" itemprop="headline">
-            <a href="http://localhost:4000/linear-algebra/subspaces/" itemprop="url">Subspaces
+            <a href="http://localhost:4000/linear-algebra/subspaces/" itemprop="url">Understanding the Null Space – From Geometry to ML Applications
 </a>
           </h1>
           
@@ -177,31 +177,61 @@
           <aside class="sidebar__right sticky">
             <nav class="toc">
               <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On this page</h4></header>
-              <ul class="toc__menu"><li><a href="#types-of-subspaces">Types of subspaces</a><ul><li><a href="#1-null-subspace">1. Null subspace</a></li></ul></li></ul>
+              <ul class="toc__menu"><li><a href="#lets-start-with-a-question">Let’s Start with a Question!</a></li><li><a href="#too-many-solutions-welcome-to-the-null-space">Too Many Solutions? Welcome to the Null Space</a></li><li><a href="#the-black-hole-of-matrices-what-gets-pulled-in-and-lost">The Black Hole of Matrices: What Gets Pulled In and Lost</a></li><li><a href="#zooming-into-the-math-what-exactly-is-the-null-space">Zooming into the Math: What Exactly Is the Null Space?</a></li><li><a href="#to-do">To Do</a></li></ul>
             </nav>
           </aside>
         
-        <p>Notes:</p>
-<ol>
-  <li>What does matrix multiplication with a vector mean? How does it transform the vector?</li>
-  <li>Linear Functions</li>
-  <li>Geometrical interpretation of subspaces
-    <h2 id="types-of-subspaces">Types of subspaces</h2>
-  </li>
-</ol>
+        <h2 id="lets-start-with-a-question">Let’s Start with a Question!</h2>
 
-<h3 id="1-null-subspace">1. Null subspace</h3>
+<ul>
+  <li>What does it really mean for a matrix to “send” a vector to zero?</li>
+  <li>Why should an ML engineer or a data scientist care about such a concept?</li>
+</ul>
 
-<p>Given $A \in \mathbb{R}^{m \times n}$, we define the null space of $A$ as:</p>
+<p>If you’re diving into machine learning, understanding the <strong>null space</strong> is more than a textbook exercise. It’s key to understanding how models behave under the hood.</p>
+
+<h2 id="too-many-solutions-welcome-to-the-null-space">Too Many Solutions? Welcome to the Null Space</h2>
+
+<p>Let’s say you’re building a regression model to predict house prices and you are using the following features to train the model:</p>
+<ul>
+  <li><b>Feature 1</b> : Area of the house</li>
+  <li><b>Feature 2</b> : Number of rooms</li>
+  <li><b>Feature 3</b> : 2 * (Area of the house)</li>
+</ul>
+
+<p>You fit your model, get great accuracy and then realize: there are infinitely many sets of weights that yield the exact same predictions.</p>
+
+<p>What’s going on here?</p>
+
+<p>This is where the null space enters the picture. It represents the “invisible directions” (vectors) in your feature space, i.e., changes that don’t affect the output at all. In our example, this has happened because of the presence of multicollinearity.</p>
+
+<h2 id="the-black-hole-of-matrices-what-gets-pulled-in-and-lost">The Black Hole of Matrices: What Gets Pulled In and Lost</h2>
+<p>Let’s build some intuition before jumping into the math.</p>
+
+<p>When we project a 3D object onto a 2D plane, all the information about the object’s depth (the component perpendicular to the plane) is lost and maps to zero in that dimension on the 2D plane. The vectors representing that “depth-only” information would be in the null space of the projection transformation.</p>
+
+<p>A matrix transformation does something similar: it takes a vector and transforms it, but certain directions get completely wiped out. Those are the directions that belong to the null space.</p>
+
+<p>So when we say a vector lies in the null space of a matrix $A$, we mean that applying $A$ to that vector turns it into the zero vector.</p>
+
+<h2 id="zooming-into-the-math-what-exactly-is-the-null-space">Zooming into the Math: What Exactly Is the Null Space?</h2>
+
+<p>Given matrix $A \in \mathbb{R}^{m \times n}$, we define the null space of $A$ as:</p>
 
 \[N(A) = \{ x \in \mathbb{R}^n \mid Ax = 0 \}\]
 
-<p>In easier terms, $N(A)$ is all solutions $x \in \mathbb{R}^n$, where \(x = \begin{bmatrix}
-x_{1} \\
-x_{2} \\
-\vdots \\
-x_{n}
-\end{bmatrix}\) such that $Ax = 0$. Let’s look at $N(A)$ from another perspective. We can represent its rows as row vectors:</p>
+<p>In simple terms:</p>
+<ul>
+  <li>It’s the set of all input vectors 𝑥 that the matrix “kills” — sends to the origin.</li>
+  <li>It always forms a subspace of $\mathbb{R}^n$</li>
+  <li>Its dimension tells you how many directions are “invisible” to your matrix.</li>
+</ul>
+
+<blockquote>
+  <p>If the null space contains more than just the zero vector, your matrix is not full-rank, and your system of equations (or ML model) has multiple solutions.</p>
+</blockquote>
+
+<p>Let’s look at $N(A)$ from another perspective. We can represent its rows as row vectors:</p>
 
 \[A = \begin{pmatrix}
 a^T_{1} \\
@@ -230,7 +260,7 @@ a_{3} \cdot x \\
 a_{m} \cdot x
 \end{pmatrix}\]
 
-<p>For $x$ to be in the null space $N(A)$, we must have $Ax = 0$. This means:</p>
+<p>For $x$ to be in the $N(A)$, we must have $Ax = 0$. This means:</p>
 
 \[\begin{pmatrix}
 a_{1} \cdot x \\
@@ -255,33 +285,126 @@ a_{m} \cdot x
 <p>Since we know that the dot product of two vectors being zero means the vectors are orthogonal to each other,<br />
 <strong>a vector $x$ is in the null space of $A$ if and only if $x$ is orthogonal to every row vector of matrix $A$.</strong></p>
 
-<p>Intuitively, we can think of null space of a linear transformation (or a matrix that represents it) as the set of “invisible” input vectors. Let’s break it down further:</p>
-<ul>
-  <li><b> Linear Transformation as a mapping: </b> Imagine a linear trasnformation as a function that takes an input vector and transforms it into an output vector in a (possibly) different vector space. Its like a machine that takes something in and spits something else out.</li>
-  <li><b> The Zero Vector as the “Target”: </b> The zero vector in the output space is a special “target”.</li>
-  <li><b> Null Space - The Inputs that Vanish:</b> The null space is the collection of all the vectors when fed into this “machine” (the linear transformation) get squashed down and become the zero vector in the output space. They are the inputs that the transformation “annihilates” or makes “null”.</li>
-</ul>
+<blockquote>
+  <p>The row space of $A$, denoted as $\text{Row}(A)$, is the span of the row vectors of $A$. Since $x$ is orthogonal to each row vector, it must also be orthogonal to any linear combination of the row vectors. This means that $N(A)$ is orthogonal to the entire row space of $A$. We can write this as: <br />
+\begin{gathered} 
+ N(A) \perp \text{Row}(A) 
+\end{gathered}</p>
+</blockquote>
 
-<p><b> Example: </b></p>
-<ol>
-  <li>When we project a 3D object onto a 2D plane, all the information about the object’s depth (the component perpendicular to the plane) is lost and maps to zero in that dimension on the 2D plane. The vectors representing that “depth-only” information would be in the null space of the projection transformation.</li>
-</ol>
+<p><b> Make the illustration of null space using following regression example as sub heading of “Zooming into the math” </b></p>
+<h2 id="to-do">To Do</h2>
+<p>proof: please elaborate in detail - Let’s say you’re building a regression model. What if there are multiple equally good solutions?<br />
+This usually means your data matrix has a <strong>null space</strong>—a subspace where changes in input don’t affect the output.</p>
 
-<p>In essence, the null space tells you about the “loss of information” inherent in the linear transformation. If the null space only contains the zero vector, it means the transformation is “one-to-one” – every distinct input vector gets mapped to a distinct output vector, and no information is lost in that sense. However, if the null space contains non-zero vectors, it means there are different input vectors that end up at the same output vector (specifically, the zero vector), indicating some information is being “lost” or “ignored” by the transformation.
-So, the null space is a fundamental concept that helps us understand which input vectors are “invisible” to a particular linear transformation because they get mapped to zero. It reveals the non-uniqueness of inputs that lead to a specific output (especially the zero output) and provides insights into the structure and properties of the linear transformation itself.</p>
+<p>Suppose you’re solving a linear regression problem:</p>
 
-<p><strong>Notes:</strong></p>
+<p>𝑋
+𝛽
+=
+𝑦
+Xβ=y
+𝑋
+X is your design matrix (e.g., features).</p>
 
-<ul>
-  <li>
-    <p><strong>Row Space:</strong><br />
-The row space of $A$, denoted as $\text{Row}(A)$, is the span of the row vectors of $A$. Since $x$ is orthogonal to each row vector, it must also be orthogonal to any linear combination of the row vectors. This means that $N(A)$ is orthogonal to the entire row space of $A$. We can write this as:</p>
+<p>𝛽
+β is the vector of coefficients you want to learn.</p>
 
-\[N(A) \perp \text{Row}(A)\]
-  </li>
-</ul>
+<p>𝑦
+y is your output/target vector.</p>
 
-<p><strong>Example</strong>:</p>
+<p>Now imagine that there is not just one 
+𝛽
+β that gives you a good fit — but infinitely many.</p>
+
+<p>Why? Because the system has redundant information, and part of 
+𝛽
+β can move freely without changing the outcome 
+𝑦
+y.</p>
+
+<p>This “freedom” is precisely what the null space captures.</p>
+
+<p>📐 Geometric View
+The null space of 
+𝑋
+X is the set of all vectors 
+𝑣
+v such that:</p>
+
+<p>𝑋
+𝑣
+=
+0
+Xv=0
+If 
+𝑣
+v is in the null space, and you have any solution 
+𝛽
+0
+β 
+0
+​
+ , then:</p>
+
+<p>𝛽
+0
++
+𝑣
+β 
+0
+​
+ +v
+is also a solution! Why?</p>
+
+<p>Because:</p>
+
+<p>𝑋
+(
+𝛽
+0
++
+𝑣
+)
+=
+𝑋
+𝛽
+0
++
+𝑋
+𝑣
+=
+𝑦
++
+0
+=
+𝑦
+X(β 
+0
+​
+ +v)=Xβ 
+0
+​
+ +Xv=y+0=y
+➡️ This means the null space contains the “directions” along which we can move without affecting predictions.</p>
+
+<p>🧪 ML Interpretation
+In practical ML:</p>
+
+<p>The null space contains non-identifiable components of the model — parts of the coefficient vector that you cannot learn uniquely from data.</p>
+
+<p>If the null space is non-trivial (i.e., not just the zero vector), then:</p>
+
+<p>There is collinearity (linearly dependent features).</p>
+
+<p>The matrix 
+𝑋
+𝑇
+𝑋
+X 
+T
+ X is not invertible, so the normal equation doesn’t have a unique solution.
+<strong>Example</strong>:</p>
 
 \[Ax =
 \begin{bmatrix}
