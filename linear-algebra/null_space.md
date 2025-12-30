@@ -44,18 +44,18 @@ A matrix transformation does something similar: it takes a vector and transforms
 
 So when we say a vector lies in the null space of a matrix $A$, we mean that applying $A$ to that vector turns it into the zero vector.
 
-## Zooming into the Math: What Exactly Is the Null Space?
+## What Exactly Is the Null Space?
 
 Given matrix $A \in \mathbb{R}^{m \times n}$, we define the null space of $A$ as: 
 
 $$
-N(A) = \{ x \in \mathbb{R}^n \mid Ax = 0 \}
+\mathcal{N}(A) = \{ x \in \mathbb{R}^n \mid Ax = 0 \}
 $$
 
 In simple terms:
 - It’s the set of all input vectors 𝑥 that the matrix "kills" — sends to the origin.
 - It always forms a subspace of $\mathbb{R}^n$
-- Its dimension tells you how many directions are "invisible" to your matrix.
+- Its dimension tells you how many directions are "invisible" to your matrix. (Explained in detail below - https://chatgpt.com/share/694d0338-dff4-800b-91d8-c591c33f5324)
 
 > If the null space contains more than just the zero vector, your matrix is not full-rank, and your system of equations (or ML model) has multiple solutions.
 
@@ -128,7 +128,93 @@ Since we know that the dot product of two vectors being zero means the vectors a
 \end{gathered}
 
 <b> Make the illustration of null space using following regression example as sub heading of "Zooming into the math" </b>
-## To Do
+## Zooming into the Math
+
+### Null Space in Linear Regression
+
+Let’s say you’re building a regression model. What if there are multiple equally good solutions?
+This usually means your data matrix has a null space.
+
+Now, let's look at the equation to solve for 𝛽:
+
+$$
+y=X\beta+ \epsilon
+$$
+
+where, <br>
+X: design matrix (e.g., features) <br>
+β: vector of coefficients you want to learn <br>
+y: obutput/target vector <br>
+ϵ: Noise <br>
+
+Now imagine that there is not just one 𝛽 that gives you a good fit, but infinitely many.
+Why? Because the system has redundant information, and part of 𝛽 can move freely without changing the outcome 𝑦. This “freedom” is precisely what the null space captures.
+
+The null space of 𝑋 is the set of all vectors 𝑣 such that:
+
+$$
+𝑋𝑣=0
+$$
+
+If 𝑣 is in the null space, and you have any solution $𝛽_{0}$, then $𝛽_0+𝑣$ is also a solution. Why? Because:
+
+$$
+Xβ=X(𝛽_0+𝑣) = X𝛽_0 + X𝑣 = y+0
+$$
+
+This means the null space contains the "directions" along which we can move without affecting predictions.
+
+The null space contains non-identifiable components of the model, parts of the coefficient vector that you cannot learn uniquely from data. 
+
+If the null space is non-trivial (i.e., not just the zero vector), then there is **collinearity** (linearly dependent features).
+
+Going back to the house price prediction example discussed in the starting of this post, let's create a matrix using mock data:
+
+- <b>Feature 1</b> : Area of the house
+- <b>Feature 2</b> : Number of rooms
+- <b>Feature 3</b> : 2 * (Area of the house)
+
+$$
+X = \begin{bmatrix}
+100 & 2 & 200 \\
+300 & 4 & 600 \\
+150 & 1 & 300 \\
+450 & 3 & 900
+\end{bmatrix} $$
+
+For the unique solution of the linear regression to exist, the Gram matrix $X^TX$ in the Normal Equation ($ \hat\beta = (X^TX)^{-1}.(X^Ty)$) should be invertible.
+But due to presence of collinearity in the example above, the Gram matrix $X^TX$ is clealy not invertible, which implies multiple solutions exist for $X\beta=y$.
+
+Also, by explicitly solving,
+
+$$
+X\nu=0
+$$
+
+we can get **non-zero** coefficient directions invisible to the data; moving along those directions does not change predictions.
+
+$$
+\nu = t\begin{bmatrix}
+      -2\\
+      0\\
+      1
+      \end{bmatrix}, t \in \mathbb{R} 
+$$
+
+$$
+\mathcal{N}(X) = \left\{ t\begin{bmatrix}
+      -2\\
+      0\\
+      1
+      \end{bmatrix} \bigg| t \in \mathbb{R} \right\}
+$$
+
+
+--
+
+=> Write appendix to explain above points like proving how matrix transformation in the case of 3D to 2D projection works: https://chatgpt.com/share/6940646c-1680-800b-b75b-608f4b186272 
+explain - https://chatgpt.com/share/694d0338-dff4-800b-91d8-c591c33f5324
+
 proof: please elaborate in detail - Let’s say you're building a regression model. What if there are multiple equally good solutions?  
 This usually means your data matrix has a **null space**—a subspace where changes in input don't affect the output.
 
@@ -161,11 +247,7 @@ y.
 This “freedom” is precisely what the null space captures.
 
 📐 Geometric View
-The null space of 
-𝑋
-X is the set of all vectors 
-𝑣
-v such that:
+The null space of 𝑋 is the set of all vectors 𝑣 such that:
 
 𝑋
 𝑣

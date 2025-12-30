@@ -177,7 +177,7 @@
           <aside class="sidebar__right sticky">
             <nav class="toc">
               <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On this page</h4></header>
-              <ul class="toc__menu"><li><a href="#lets-start-with-a-question">Let’s Start with a Question!</a></li><li><a href="#too-many-solutions-welcome-to-the-null-space">Too Many Solutions? Welcome to the Null Space</a></li><li><a href="#the-black-hole-of-matrices-what-gets-pulled-in-and-lost">The Black Hole of Matrices: What Gets Pulled In and Lost</a></li><li><a href="#zooming-into-the-math-what-exactly-is-the-null-space">Zooming into the Math: What Exactly Is the Null Space?</a></li><li><a href="#to-do">To Do</a></li></ul>
+              <ul class="toc__menu"><li><a href="#lets-start-with-a-question">Let’s Start with a Question!</a></li><li><a href="#too-many-solutions-welcome-to-the-null-space">Too Many Solutions? Welcome to the Null Space</a></li><li><a href="#the-black-hole-of-matrices-what-gets-pulled-in-and-lost">The Black Hole of Matrices: What Gets Pulled In and Lost</a></li><li><a href="#what-exactly-is-the-null-space">What Exactly Is the Null Space?</a></li><li><a href="#zooming-into-the-math">Zooming into the Math</a><ul><li><a href="#null-space-in-linear-regression">Null Space in Linear Regression</a></li></ul></li></ul>
             </nav>
           </aside>
         
@@ -214,17 +214,17 @@
 
 <p>So when we say a vector lies in the null space of a matrix $A$, we mean that applying $A$ to that vector turns it into the zero vector.</p>
 
-<h2 id="zooming-into-the-math-what-exactly-is-the-null-space">Zooming into the Math: What Exactly Is the Null Space?</h2>
+<h2 id="what-exactly-is-the-null-space">What Exactly Is the Null Space?</h2>
 
 <p>Given matrix $A \in \mathbb{R}^{m \times n}$, we define the null space of $A$ as:</p>
 
-\[N(A) = \{ x \in \mathbb{R}^n \mid Ax = 0 \}\]
+\[\mathcal{N}(A) = \{ x \in \mathbb{R}^n \mid Ax = 0 \}\]
 
 <p>In simple terms:</p>
 <ul>
   <li>It’s the set of all input vectors 𝑥 that the matrix “kills” — sends to the origin.</li>
   <li>It always forms a subspace of $\mathbb{R}^n$</li>
-  <li>Its dimension tells you how many directions are “invisible” to your matrix.</li>
+  <li>Its dimension tells you how many directions are “invisible” to your matrix. (Explained in detail below - https://chatgpt.com/share/694d0338-dff4-800b-91d8-c591c33f5324)</li>
 </ul>
 
 <blockquote>
@@ -293,7 +293,81 @@ a_{m} \cdot x
 </blockquote>
 
 <p><b> Make the illustration of null space using following regression example as sub heading of “Zooming into the math” </b></p>
-<h2 id="to-do">To Do</h2>
+<h2 id="zooming-into-the-math">Zooming into the Math</h2>
+
+<h3 id="null-space-in-linear-regression">Null Space in Linear Regression</h3>
+
+<p>Let’s say you’re building a regression model. What if there are multiple equally good solutions?
+This usually means your data matrix has a null space.</p>
+
+<p>Now, let’s look at the equation to solve for 𝛽:</p>
+
+\[y=X\beta+ \epsilon\]
+
+<p>where, <br />
+X: design matrix (e.g., features) <br />
+β: vector of coefficients you want to learn <br />
+y: obutput/target vector <br />
+ϵ: Noise <br /></p>
+
+<p>Now imagine that there is not just one 𝛽 that gives you a good fit, but infinitely many.
+Why? Because the system has redundant information, and part of 𝛽 can move freely without changing the outcome 𝑦. This “freedom” is precisely what the null space captures.</p>
+
+<p>The null space of 𝑋 is the set of all vectors 𝑣 such that:</p>
+
+\[𝑋𝑣=0\]
+
+<p>If 𝑣 is in the null space, and you have any solution $𝛽_{0}$, then $𝛽_0+𝑣$ is also a solution. Why? Because:</p>
+
+\[Xβ=X(𝛽_0+𝑣) = X𝛽_0 + X𝑣 = y+0\]
+
+<p>This means the null space contains the “directions” along which we can move without affecting predictions.</p>
+
+<p>The null space contains non-identifiable components of the model, parts of the coefficient vector that you cannot learn uniquely from data.</p>
+
+<p>If the null space is non-trivial (i.e., not just the zero vector), then there is <strong>collinearity</strong> (linearly dependent features).</p>
+
+<p>Going back to the house price prediction example discussed in the starting of this post, let’s create a matrix using mock data:</p>
+
+<ul>
+  <li><b>Feature 1</b> : Area of the house</li>
+  <li><b>Feature 2</b> : Number of rooms</li>
+  <li><b>Feature 3</b> : 2 * (Area of the house)</li>
+</ul>
+
+\[X = \begin{bmatrix}
+100 &amp; 2 &amp; 200 \\
+300 &amp; 4 &amp; 600 \\
+150 &amp; 1 &amp; 300 \\
+450 &amp; 3 &amp; 900
+\end{bmatrix}\]
+
+<p>For the unique solution of the linear regression to exist, the Gram matrix $X^TX$ in the Normal Equation ($ \hat\beta = (X^TX)^{-1}.(X^Ty)$) should be invertible.
+But due to presence of collinearity in the example above, the Gram matrix $X^TX$ is clealy not invertible, which implies multiple solutions exist for $X\beta=y$.</p>
+
+<p>Also, by explicitly solving,</p>
+
+\[X\nu=0\]
+
+<p>we can get <strong>non-zero</strong> coefficient directions invisible to the data; moving along those directions does not change predictions.</p>
+
+\[\nu = t\begin{bmatrix}
+      -2\\
+      0\\
+      1
+      \end{bmatrix}, t \in \mathbb{R}\]
+
+\[\mathcal{N}(X) = \left\{ t\begin{bmatrix}
+      -2\\
+      0\\
+      1
+      \end{bmatrix} \bigg| t \in \mathbb{R} \right\}\]
+
+<p>–</p>
+
+<p>=&gt; Write appendix to explain above points like proving how matrix transformation in the case of 3D to 2D projection works: https://chatgpt.com/share/6940646c-1680-800b-b75b-608f4b186272 
+explain - https://chatgpt.com/share/694d0338-dff4-800b-91d8-c591c33f5324</p>
+
 <p>proof: please elaborate in detail - Let’s say you’re building a regression model. What if there are multiple equally good solutions?<br />
 This usually means your data matrix has a <strong>null space</strong>—a subspace where changes in input don’t affect the output.</p>
 
@@ -326,11 +400,7 @@ y.</p>
 <p>This “freedom” is precisely what the null space captures.</p>
 
 <p>📐 Geometric View
-The null space of 
-𝑋
-X is the set of all vectors 
-𝑣
-v such that:</p>
+The null space of 𝑋 is the set of all vectors 𝑣 such that:</p>
 
 <p>𝑋
 𝑣
