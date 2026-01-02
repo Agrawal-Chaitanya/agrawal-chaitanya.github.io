@@ -127,7 +127,7 @@ Since we know that the dot product of two vectors being zero means the vectors a
  N(A) \perp \text{Row}(A) 
 \end{gathered}
 
-<b> Make the illustration of null space using following regression example as sub heading of "Zooming into the math" </b>
+
 ## Zooming into the Math
 
 ### Null Space in Linear Regression
@@ -164,11 +164,11 @@ $$
 
 This means the null space contains the "directions" along which we can move without affecting predictions.
 
-The null space contains non-identifiable components of the model, parts of the coefficient vector that you cannot learn uniquely from data. 
 
-If the null space is non-trivial (i.e., not just the zero vector), then there is **collinearity** (linearly dependent features).
 
-Going back to the house price prediction example discussed in the starting of this post, let's create a matrix using mock data:
+>If the null space of features matrix is non-trivial (i.e., not just the zero vector), then there is **collinearity** (linearly dependent features).
+
+Now, let's use the house price prediction example discussed above to see how we can calculate those "invisible directions", along which changing the coefficients will not affect predictions. First, let's create a matrix using mock data:
 
 - <b>Feature 1</b> : Area of the house
 - <b>Feature 2</b> : Number of rooms
@@ -180,35 +180,126 @@ X = \begin{bmatrix}
 300 & 4 & 600 \\
 150 & 1 & 300 \\
 450 & 3 & 900
-\end{bmatrix} $$
+\end{bmatrix} 
+$$
 
 For the unique solution of the linear regression to exist, the Gram matrix $X^TX$ in the Normal Equation ($ \hat\beta = (X^TX)^{-1}.(X^Ty)$) should be invertible.
-But due to presence of collinearity in the example above, the Gram matrix $X^TX$ is clealy not invertible, which implies multiple solutions exist for $X\beta=y$.
+But due to presence of collinearity in the example above, the Gram matrix $X^TX$ is clealy not invertible, which implies multiple solutions exist for $X\beta=y$. **Since, $\beta = \beta_0 + \nu$,
+where $\nu \in \mathcal{N}(X)$, any two solutions differ by a vector in the null space of $X$**.
 
-Also, by explicitly solving,
+Let's solve the following for $\nu$, to find the null space of $X$:
 
 $$
 X\nu=0
 $$
 
-we can get **non-zero** coefficient directions invisible to the data; moving along those directions does not change predictions.
+i.e., get **non-zero** coefficient directions invisible to the data; moving along those directions does not change predictions.
 
-$$
-\nu = t\begin{bmatrix}
-      -2\\
-      0\\
-      1
-      \end{bmatrix}, t \in \mathbb{R} 
-$$
 
 $$
 \mathcal{N}(X) = \left\{ t\begin{bmatrix}
       -2\\
       0\\
       1
-      \end{bmatrix} \bigg| t \in \mathbb{R} \right\}
+      \end{bmatrix} \bigg | t \in \mathbb{R} \right\}
 $$
 
+It means any coefficient vector differing by a multiple of $\begin{bmatrix} -2 & 0 & 1 \end{bmatrix}^T$ produces identical predictions.
+
+
+### Null Space of Projection Matrix
+
+As discussed in the example above, let's consider a simple projection from 3D to 2D.
+
+$$
+T:\mathbb{R}^3 \to \mathbb{R}^2
+$$
+<br>
+For example, projecting 3D object onto the $xy$-plane:
+
+$$
+T(x,y,z) = (x,y)
+$$
+
+This transformation **keeps** the $x$ and $y$ components and <b>drops</b> the $z$ component.
+Any point with different $z$-values but the same $x,y$ will map to the same point in 2D:
+
+$$
+(1, 2, 5) \mapsto (1,2)
+$$
+
+$$
+(1, 2, -7) \mapsto (1,2)
+$$
+
+All depth information (the $z$-direction) is destroyed by the projection. <br>
+Now, this projection matrix, given by the linear transformation $T$, can be written as:
+
+$$
+T = \begin{bmatrix}
+1 & 0 & 0 \\
+0 & 1 & 0
+\end{bmatrix}
+$$
+
+This matrix:
+- keeps the $x$ and $y$ components
+- discard the $z$ component entirely
+
+<br>
+Applying it to a vector $(x,y,z)$:
+
+$$
+T\begin{bmatrix}
+x \\
+y \\
+z
+\end{bmatrix}= \begin{bmatrix} x \\ y \end{bmatrix}
+$$
+
+Let's see which vectors get mapped to zero, i.e., the directions that disappear when we project a 3D object onto a 2D plane.
+
+Solve:
+
+$$
+T\nu=0
+$$
+
+$$
+\begin{bmatrix}
+1 & 0 & 0 \\
+0 & 1 & 0
+\end{bmatrix}
+
+\begin{bmatrix}
+x \\
+y \\
+z
+\end{bmatrix}=
+\begin{bmatrix}
+0 \\
+0 \\
+\end{bmatrix}
+$$
+
+This implies:
+- $x=0$
+- $y=0$
+- $z$ can be *anything*
+
+So the null space is:
+
+$$
+\mathcal{N}(T) = \left\{ \begin{bmatrix}
+      0\\
+      0\\
+      z
+      \end{bmatrix} \,\bigg|\, z \in \mathbb{R} \right\}
+$$
+
+Here, key interpretation is that any moveement purely along the $z$-axis produce no change at all in the projected 2D output. Therefore, $z$-direction is invisible to the matrix $T$.
+
+ 
 
 --
 
