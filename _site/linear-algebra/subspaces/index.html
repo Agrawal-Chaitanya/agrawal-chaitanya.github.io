@@ -226,7 +226,7 @@
 <ul>
   <li>It’s the set of all input vectors 𝑥 that the matrix “kills” — sends to the origin.</li>
   <li>It always forms a subspace of $\mathbb{R}^n$</li>
-  <li>Its dimension tells you how many directions are “invisible” to your matrix. (Explained in detail below - https://chatgpt.com/share/694d0338-dff4-800b-91d8-c591c33f5324)</li>
+  <li>Its dimension tells you how many directions are “invisible” to your matrix.</li>
 </ul>
 
 <blockquote>
@@ -306,7 +306,7 @@ This usually means your data matrix has a null space.</p>
 \[y=X\beta+ \epsilon\]
 
 <p>where, <br />
-X: design matrix (e.g., features) <br />
+X: features matrix <br />
 β: vector of coefficients you want to learn <br />
 y: obutput/target vector <br />
 ϵ: Noise <br /></p>
@@ -361,13 +361,45 @@ where $\nu \in \mathcal{N}(X)$, any two solutions differ by a vector in the null
 
 <p>It means any coefficient vector differing by a multiple of $\begin{bmatrix} -2 &amp; 0 &amp; 1 \end{bmatrix}^T$ produces identical predictions.</p>
 
+<p><strong>Important points to note:</strong></p>
+<ul>
+  <li>
+    <p>For a linear regression features matrix $X \in \mathbb{R}^{n \times p} $:</p>
+
+    <center>
+$$
+\mathcal{N}(X) \neq \{0\} \iff \text{columns of $X$ are linearly dependent}
+$$ 
+</center>
+
+    <p>And linear dependence of features is exactly what multicollinearity means.
+So in regression analysis:</p>
+    <blockquote>
+      <p>A non-trivial null space of $X$ implies perfect multicollinearity among the features.</p>
+    </blockquote>
+  </li>
+  <li>
+    <p>High correlation $\Leftrightarrow$ numerical instability (not null space). <br />
+It means columns of $X$ are nearly linearly dependent but no exact linear combination equals zero. <br />
+So: <br /></p>
+    <center>
+$$
+   \mathcal{N}(X) = \{0\}
+$$
+</center>
+
+    <p>For a highly correlated features matrix (feature 1 $\approx$ feature 2), the regression coefficients are highly sensitive to noise and rounding erros in the features. <br />
+The model struggles to decide how to split weight between them. Consequently, even small noise can drastically flip the magnitude or reverse the signs of the coefficients.</p>
+  </li>
+</ul>
+
 <h3 id="null-space-of-projection-matrix">Null Space of Projection Matrix</h3>
 
 <p>As discussed in the example above, let’s consider a simple projection from 3D to 2D.</p>
 
-<p>\(T:\mathbb{R}^3 \to \mathbb{R}^2\)
-<br />
-For example, projecting 3D object onto the $xy$-plane:</p>
+\[T:\mathbb{R}^3 \to \mathbb{R}^2\]
+
+<p>For example, projecting 3D object onto the $xy$-plane:</p>
 
 \[T(x,y,z) = (x,y)\]
 

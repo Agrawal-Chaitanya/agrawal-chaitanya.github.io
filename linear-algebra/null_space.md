@@ -57,7 +57,7 @@ $$
 In simple terms:
 - It’s the set of all input vectors 𝑥 that the matrix "kills" — sends to the origin.
 - It always forms a subspace of $\mathbb{R}^n$
-- Its dimension tells you how many directions are "invisible" to your matrix. (Explained in detail below - https://chatgpt.com/share/694d0338-dff4-800b-91d8-c591c33f5324)
+- Its dimension tells you how many directions are "invisible" to your matrix.
 
 > If the null space contains more than just the zero vector, your matrix is not full-rank, and your system of equations (or ML model) has multiple solutions.
 
@@ -144,7 +144,7 @@ y=X\beta+ \epsilon
 $$
 
 where, <br>
-X: design matrix (e.g., features) <br>
+X: features matrix <br>
 β: vector of coefficients you want to learn <br>
 y: obutput/target vector <br>
 ϵ: Noise <br>
@@ -208,6 +208,33 @@ $$
 
 It means any coefficient vector differing by a multiple of $\begin{bmatrix} -2 & 0 & 1 \end{bmatrix}^T$ produces identical predictions.
 
+**Important points to note:**
+-  For a linear regression features matrix $X \in \mathbb{R}^{n \times p} $: 
+
+   <center>
+   $$
+   \mathcal{N}(X) \neq \{0\} \iff \text{columns of $X$ are linearly dependent}
+   $$ 
+   </center>
+
+   And linear dependence of features is exactly what multicollinearity means.
+   So in regression analysis:
+   > A non-trivial null space of $X$ implies perfect multicollinearity among the features.
+ 
+-  High correlation $\Leftrightarrow$ numerical instability (not null space). <br>
+   It means columns of $X$ are nearly linearly dependent but no exact linear combination equals zero. <br>
+   So: <br>
+   <center>
+   $$
+      \mathcal{N}(X) = \{0\}
+   $$
+   </center>
+
+   For a highly correlated features matrix (feature 1 $\approx$ feature 2), the regression coefficients are highly sensitive to noise and rounding erros in the features. <br>
+   The model struggles to decide how to split weight between them. Consequently, even small noise can drastically flip the magnitude or reverse the signs of the coefficients.
+
+
+
 
 ### Null Space of Projection Matrix
 
@@ -216,7 +243,8 @@ As discussed in the example above, let's consider a simple projection from 3D to
 $$
 T:\mathbb{R}^3 \to \mathbb{R}^2
 $$
-<br>
+
+
 For example, projecting 3D object onto the $xy$-plane:
 
 $$
