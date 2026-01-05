@@ -126,7 +126,7 @@ Since we know that the dot product of two vectors being zero means the vectors a
 
 >  The row space of $A$, denoted as $\text{Row}(A)$, is the span of the row vectors of $A$. Since $x$ is orthogonal to each row vector, it must also be orthogonal to any linear combination of the row vectors. This means that $N(A)$ is orthogonal to the entire row space of $A$. We can write this as: <br>
 > \begin{gathered} 
- N(A) \perp \text{Row}(A) 
+ \mathcal{N}(A) \perp \text{Row}(A) 
 \end{gathered}
 
 
