@@ -34,7 +34,7 @@ You fit your model, get great accuracy and then realize: there are infinitely ma
 What’s going on here? 
 
 This is where the null space enters the picture. It represents the "invisible directions" (vectors) in your feature space, i.e., changes that don’t affect the output at all. In our example, this has happened because of the presence of multicollinearity. <br>
-[Check the maths below](#Null-Space-in-Linear-Regression)
+[Check the maths below](#null-space-in-linear-regression)
 
 ## The Black Hole of Matrices: What Gets Pulled In and Lost
 Let’s build some intuition before jumping into the math.
