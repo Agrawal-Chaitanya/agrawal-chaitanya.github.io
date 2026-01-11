@@ -22,7 +22,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:site_name" content="Intuitive Maths">
 <meta property="og:title" content="Understanding the Null Space – From Geometry to ML Applications">
-<meta property="og:url" content="http://localhost:4000/linear-algebra/subspaces/">
+<meta property="og:url" content="http://localhost:4000/linear-algebra/null-space/">
 
 
   <meta property="og:description" content="A website to learn maths intuitively">
@@ -42,7 +42,7 @@
   
 
 
-<link rel="canonical" href="http://localhost:4000/linear-algebra/subspaces/">
+<link rel="canonical" href="http://localhost:4000/linear-algebra/null-space/">
 
 
 
@@ -163,7 +163,7 @@
       
         <header>
           <h1 id="page-title" class="page__title" itemprop="headline">
-            <a href="http://localhost:4000/linear-algebra/subspaces/" itemprop="url">Understanding the Null Space – From Geometry to ML Applications
+            <a href="http://localhost:4000/linear-algebra/null-space/" itemprop="url">Understanding the Null Space – From Geometry to ML Applications
 </a>
           </h1>
           
@@ -204,7 +204,7 @@
 <p>What’s going on here?</p>
 
 <p>This is where the null space enters the picture. It represents the “invisible directions” (vectors) in your feature space, i.e., changes that don’t affect the output at all. In our example, this has happened because of the presence of multicollinearity. <br />
-<a href="#Null-Space-in-Linear-Regression">Check the maths below</a></p>
+<a href="#null-space-in-linear-regression">Check the maths below</a></p>
 
 <h2 id="the-black-hole-of-matrices-what-gets-pulled-in-and-lost">The Black Hole of Matrices: What Gets Pulled In and Lost</h2>
 <p>Let’s build some intuition before jumping into the math.</p>
@@ -290,7 +290,7 @@ a_{m} \cdot x
 <blockquote>
   <p>The row space of $A$, denoted as $\text{Row}(A)$, is the span of the row vectors of $A$. Since $x$ is orthogonal to each row vector, it must also be orthogonal to any linear combination of the row vectors. This means that $N(A)$ is orthogonal to the entire row space of $A$. We can write this as: <br />
 \begin{gathered} 
- N(A) \perp \text{Row}(A) 
+ \mathcal{N}(A) \perp \text{Row}(A) 
 \end{gathered}</p>
 </blockquote>
 

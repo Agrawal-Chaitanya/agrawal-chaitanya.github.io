@@ -10,7 +10,7 @@
   <head>
     <meta charset="utf-8">
 
-<!-- begin _includes/seo.html --><title>Intuitive Maths</title>
+<!-- begin _includes/seo.html --><title>Condition Number - Intuitive Maths</title>
 <meta name="description" content="A website to learn maths intuitively">
 
 
@@ -21,8 +21,8 @@
 <meta property="og:type" content="website">
 <meta property="og:locale" content="en_US">
 <meta property="og:site_name" content="Intuitive Maths">
-<meta property="og:title" content="Intuitive Maths">
-<meta property="og:url" content="http://localhost:4000/">
+<meta property="og:title" content="Condition Number">
+<meta property="og:url" content="http://localhost:4000/linear-algebra/condition-number">
 
 
   <meta property="og:description" content="A website to learn maths intuitively">
@@ -42,20 +42,10 @@
   
 
 
-<link rel="canonical" href="http://localhost:4000/">
+<link rel="canonical" href="http://localhost:4000/linear-algebra/condition-number">
 
 
 
-
-
-  <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Person",
-    "name": "Chaitanya",
-    "url": "http://localhost:4000/"
-}
-</script>
 
 
 
@@ -92,7 +82,7 @@
 
   </head>
 
-  <body class="layout--home" dir="ltr">
+  <body class="layout--single" dir="ltr">
     <nav class="skip-links">
   <ul>
     <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
@@ -133,143 +123,119 @@
 
     <div class="initial-content">
       
+<script>
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      displayMath: [['$$', '$$'], ['\\[', '\\]']],
+      packages: ['base', 'ams']
+    },
+    loader: {
+      load: ['[tex]/ams']
+    },
+    svg: {
+      fontCache: 'global'
+    }
+  };
+</script>
+<script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+</script>
+
+
+
+
+
 
 
 
 <div id="main" role="main">
   
-  <div class="sidebar sticky">
-  
 
 
-<div itemscope itemtype="https://schema.org/Person" class="h-card">
-
-  
-
-  <div class="author__content">
-    <h3 class="author__name p-name" itemprop="name">
-      <a class="u-url" rel="me" href="http://localhost:4000/" itemprop="url">Chaitanya Agrawal</a>
-    </h3>
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Condition Number">
     
-  </div>
+    
+    
 
-  <div class="author__urls-wrapper">
-    <button class="btn btn--inverse">Follow</button>
-    <ul class="author__urls social-icons">
+    <div class="page__inner-wrap">
       
-
-      
-        
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">
+            <a href="http://localhost:4000/linear-algebra/condition-number" itemprop="url">Condition Number
+</a>
+          </h1>
           
-            <li><a href="mailto:agr.chaitanya31@gmail.com" rel="nofollow noopener noreferrer me"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">agr.chaitanya31@gmail.com</span></a></li>
-          
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
         
-          
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On this page</h4></header>
+              
+            </nav>
+          </aside>
         
-          
         
-          
+
         
-          
+      </section>
+
+      <footer class="page__meta">
         
-          
         
-      
+  
 
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      <!--
-  <li>
-    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
-      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
-    </a>
-  </li>
--->
-    </ul>
-  </div>
-</div>
 
   
-  </div>
 
-
-
-  <div class="archive">
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
     
-      <h1 id="page-title" class="page__title"></h1>
+      <a href="/tags/#linear-algebra" class="page__taxonomy-item p-category" rel="tag">Linear Algebra</a>
     
-    <p>Welcome! Explore the topics below:</p>
-
-<ul>
-  <li><a href="/linear-algebra/">Linear Algebra</a></li>
-  <li><a href="/optimization/intro.html">Optimization</a></li>
-  <li><a href="/causal-inference/intro.html">Causal Inference</a></li>
-</ul>
+    </span>
+  </p>
 
 
 
 
-
-
-<h3 class="archive__subtitle">Recent posts</h3>
-
-
-
-
-<div class="entries-list">
   
-</div>
 
 
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/categories/#mathematics" class="page__taxonomy-item p-category" rel="tag">Mathematics</a>
+    
+    </span>
+  </p>
 
 
-  </div>
+        
+
+      </footer>
+
+      
+
+      
+
+    </div>
+
+    
+  </article>
+
+  
+  
 </div>
       
     </div>
