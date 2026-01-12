@@ -177,11 +177,42 @@
           <aside class="sidebar__right sticky">
             <nav class="toc">
               <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On this page</h4></header>
-              
+              <ul class="toc__menu"><li><a href="#the-steering-wheel-analogy">The Steering Wheel Analogy</a></li><li><a href="#bridging-the-gap-from-cars-to-matrices">Bridging the Gap: From Cars to Matrices</a></li></ul>
             </nav>
           </aside>
         
-        
+        <h2 id="the-steering-wheel-analogy">The Steering Wheel Analogy</h2>
+<p><em>Imagine you are driving an old car where the steering wheel is so ‘loose’ that a tiny twitch of your hand sends your vehicle swerving into the adjacent lane. Or perhaps the opposite case, where the steering wheel is so ‘stiff’ that turning it halfway barely changes the direction of the car.</em>
+<br /></p>
+
+<p>In both cases, there is a mismatch between your input (the turn of the wheel) and the output (the direction of the car). If a small adjustment leads to an uncontrollable shift, you’re dealing with an unstable system. To measure this instability, mathematicians rely on a single, crucial value known as the <strong>condition number</strong>.</p>
+
+<h2 id="bridging-the-gap-from-cars-to-matrices">Bridging the Gap: From Cars to Matrices</h2>
+
+<p>When we solve a problem, like a linear regression or a system of equations, we assume our data is perfect. But it never is. There’s always a little “noise” or a rounding error (the “twitch” on the steering wheel).</p>
+
+<p>Let’s consider a system of equations $Ax=b$, where $A$ is invertible and $b$ is non-zero. There is a unique solution $x$, which is non-zero. Now we are pertubing the input $b$ by $\delta b$ to get the following perturbed system:
+\(A \hat{x}=b+\delta{b}\)</p>
+
+<p>where, 
+$\hat{x}=x+\delta{x}$.</p>
+
+<p>Since the error $\delta{x}$ may be negligible or catastrophic depending on the scale of $x$, it is more meaningful to work with the relative error $\frac{\lVert \delta{x} \rVert}{\lVert x \rVert}$. Here, we use vector norm $\lVert . \rVert$, to quantify the size of vectors. The relative size of $\delta b$ with respect to $b$ is given by $\frac{\lVert \delta{b} \rVert}{\lVert b \rVert}$. The effect of the perturbation in $b$ on the solution $x$ is given by the following inequality:</p>
+
+\[\frac{\lVert \delta{x} \rVert}{\lVert x \rVert} \leq \lVert A \rVert \lVert A^{-1} \rVert \frac{\lVert \delta{b} \rVert}{\lVert b \rVert}\]
+
+<p>where, the factor $\lVert A \rVert \lVert A^{-1} \rVert$ is called the <strong>condition number of A, $\kappa(A)$</strong>, i.e.,</p>
+
+\[\kappa(A) = \lVert A \rVert \lVert A^{-1} \rVert\]
+
+<p>So, <strong>condition number</strong> ($\kappa$) is essentially the <strong>multiplier of error</strong>.</p>
+<ul>
+  <li><strong>A Low Condition Number (Near 1)</strong>: The steering is precise. A small error in your data leads to a small, predictable error in your result. The problem is well-conditioned.</li>
+  <li><strong>A High Condition Number (e.g., 1,000+)</strong>: The steering is “loose” and dangerous. A tiny error in your data is amplified into a massive error in your result. The problem is ill-conditioned. 
+<br /></li>
+</ul>
+
+<p><strong>NOTE</strong>: <em>A condition number of 1 represents the ideal scenario; however, what should be considered “high” or “problematic” depends upon a number of factors like the numerical precision of the computing environment, the amount of error which is tolerable, etc.</em></p>
 
         
       </section>
