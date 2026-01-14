@@ -24,6 +24,7 @@ In both cases, there is a mismatch between your input (the turn of the wheel) an
 When we solve a problem, like a linear regression or a system of equations, we assume our data is perfect. But it never is. There’s always a little "noise" or a rounding error (the "twitch" on the steering wheel). 
 
 Let's consider a system of equations $Ax=b$, where $A \in \mathbb{R}^{n \times n}$ is square, invertible matrix and $b$ is non-zero. There is a unique solution $x$, which is non-zero. Now we are pertubing the input $b$ by $\delta b$ to get the following perturbed system:
+
 $$
 A \hat{x}=b+\delta{b}
 $$
@@ -45,17 +46,77 @@ $$
 
 So, **condition number** ($\kappa$) is essentially the **multiplier of error**.
 - **A Low Condition Number (Near 1)**: The steering is precise. A small error in your data ($=\frac{\lVert \delta{b} \rVert}{\lVert b \rVert}$) leads to a small, predictable error ($=\frac{\lVert \delta{x} \rVert}{\lVert x \rVert}$) in your result. Thus if $\kappa(A)$ is not too large, we say that problem is well-conditioned.
-- **A High Condition Number (e.g., 1,000+)**: The steering is "loose" and dangerous. A tiny error in your data is amplified into a massive error in your result. In other words, the sytem is very sensitive to perturbations in $b$. The problem is ill-conditioned. 
+- **A High Condition Number (e.g., 1,000+)**: The steering is "loose" and dangerous. A tiny error in your data ($=\frac{\lVert \delta{b} \rVert}{\lVert b \rVert}$) is amplified into a massive error in your result ($=\frac{\lVert \delta{x} \rVert}{\lVert x \rVert}$). In other words, the sytem is very sensitive to perturbations in $b$. The problem is ill-conditioned. 
 <br>
 
 **NOTE**: *A condition number of 1 represents the ideal scenario; however, what should be considered “high” or “problematic” depends upon a number of factors like the numerical precision of the computing environment, the amount of error which is tolerable, etc.*
+
+###  Example of an Ill-Conditioned System
+
+Let 
+$$A = \begin{bmatrix} 
+1000 & 998 \\
+999 & 997 
+\end{bmatrix}
+$$, then 
+$$A^{-1} = \begin{bmatrix} 
+-498.5 & 499 \\
+499.5 & -500 
+\end{bmatrix}$$ 
+
+
+We see that $\kappa(A) = 1.99 \times 10^6$ <br>
+
+Now consider a linear system having $A$ as its coefficient matrix:
+
+$$
+\begin{bmatrix} 
+1000 & 998\\
+999 & 997\\
+\end{bmatrix}
+
+\begin{bmatrix} x_1 \\
+                x_2
+                \end{bmatrix} =
+\begin{bmatrix} 1998 \\
+                1996
+                \end{bmatrix}
+$$ 
+
+
+This is a system of two linear equations: 
+
+$$
+1000x_1+998x_2=1998 
+$$
+
+$$
+999x_1 + 997x_2=1996,
+$$
+
+
+each of which represents a line in the plane. The slopes of the lines are:
+
+$m_1 \approx -1000/998 \approx -1.002004008016$ <br>
+$m_2 \approx -999/997 \approx -1.002006018054$ <br>
+
+Thus the solution of the system (point 'a') is the intersection of two nearly parallel lines. Now, a small perturbation in the first line will cause a parallel shift in the line. The new perturbed line is denoted by dashed line. Since both lines are almost parallel, even a small shift in any of the lines cause a drastic shift in the solution from point 'a' to 'b' (as shown in figure below). 
+
+
+This shows that this system of equations or the given matrix $A$ is ill-conditioned, as also suggested by very high condition number.
+
+<p align="center">
+<img src="/linear-algebra/images/condition_number-parallel_lines.jpg">
+</p>
+
 
 ## Properties of Condition Number
 -  **$\kappa(A) \geq 1$**, for square invertible matrices <br>
 
     **Proof**: <br>
-    From $I = AA^{-1}$, we have:
+    From $I = AA^{-1}$, we have: <br>
     $$\lVert I \rVert = \lVert AA^{-1} \rVert \leq \lVert A \rVert \lVert A^{-1} \rVert$$ <br>
+
     Since $\lVert I \rVert = 1$, it follows that: <br>
     $$\kappa(A) = \lVert A \rVert \lVert A^{-1} \rVert \geq 1$$
 
@@ -70,3 +131,39 @@ So, **condition number** ($\kappa$) is essentially the **multiplier of error**.
     **Proof**: <br>
     $$\kappa(A^{-1}) = \lVert A^{-1} \rVert \lVert (A^{-1})^{-1} \rVert = \lVert A^{-1} \rVert \lVert A \rVert$$
     $$= \lVert A \rVert \lVert A^{-1} \rVert = \kappa(A)$$
+
+### Decomposition of ill-conditioning (obsidian notes)
+### Discuss example 2.2.8 (Fundamnetals of Matrix Computation (FMC))
+### Discuss how Cond Numb is subjective Pg 125 & 126 (FMC)
+
+
+
+## Geometric Interpretation 
+
+- First derive 2-Norm from max magnification & min magnification
+- Explain intuitively the above point
+- How Ax transforms the vector x and A-1 undo the transformation. Check book Fundamen
+- From circle to ellipse
+- Condition Nunber = maxmag(A)/minmag(A)
+- Well-conditioned matrix preserves shape
+
+    https://chatgpt.com/s/t_69651ed618c08191be5c0b1311050c3a
+    https://chatgpt.com/s/t_69651ee3541481919e45bed6074f8d03
+    https://chatgpt.com/s/t_69651eedec1881919c55dccc157e8f6e
+
+- A large condition number means the matrix treats different directions very unevenly.
+
+
+### Example 2.2.16
+### Ill-conditioning due to poor scaling (Pg 130 - FMC)
+
+### Condition Number in Multicollienarity
+- Presence of condition number in statsmodel summary
+
+- "weak" directions is the property of feature matrix. Therefore, changes in beta along this "weak" directions causes large swings in beta but with negligible change in prediction
+    https://chatgpt.com/s/t_6962af95956c819184f44c467cab4ec2
+    https://chatgpt.com/s/t_6962afb41a4c8191a8e4a211928d1ad8
+
+## Appendix
+
+All proofs will be placed in this section, including 'Properties' sections proofs
