@@ -239,28 +239,86 @@ $\hat{x}=x+\delta{x}$.</p>
 \begin{bmatrix} x_1 \\
                 x_2
                 \end{bmatrix} =
-\begin{bmatrix} 1998 \\
-                1996
+\begin{bmatrix} b_1 \\
+                b_2
                 \end{bmatrix}\]
 
 <p>This is a system of two linear equations:</p>
 
-\[1000x_1+998x_2=1998\]
+\[1000x_1+998x_2=b_1\]
 
-\[999x_1 + 997x_2=1996,\]
+\[999x_1 + 997x_2=b_2,\]
 
 <p>each of which represents a line in the plane. The slopes of the lines are:</p>
 
 <p>$m_1 \approx -1000/998 \approx -1.002004008016$ <br />
 $m_2 \approx -999/997 \approx -1.002006018054$ <br /></p>
 
-<p>Thus the solution of the system (point ‘a’) is the intersection of two nearly parallel lines. Now, a small perturbation in the first line will cause a parallel shift in the line. The new perturbed line is denoted by dashed line. Since both lines are almost parallel, even a small shift in any of the lines cause a drastic shift in the solution from point ‘a’ to ‘b’ (as shown in figure below).</p>
+<p>Thus the solution of the system (point ‘a’) is the intersection of two nearly parallel lines. Now, let’s make a small perturbation in the first line, which will cause a parallel shift in the line. The new perturbed line is denoted by dashed line. Since both lines are almost parallel, even a small shift in any of the lines cause a drastic shift in the solution from point ‘a’ to ‘b’ (as shown in figure below).</p>
 
 <p>This shows that this system of equations or the given matrix $A$ is ill-conditioned, as also suggested by very high condition number.</p>
 
 <p align="center">
 <img src="/linear-algebra/images/condition_number-parallel_lines.jpg" />
 </p>
+
+<blockquote>
+  <p>A large condition number means the matrix treats different directions very unevenly.</p>
+</blockquote>
+
+<p>In other words, a matrix has a large condition number if it stretches unit vectors by very different amounts depending on their direction, strongly amplifying some directions while almost annihilating others.</p>
+
+<p>Let’s use the above matrix $A$ to explain aforementioned statement:</p>
+
+<p>For 
+\(A = \begin{bmatrix} 
+1000 &amp; 998 \\
+999 &amp; 997 
+\end{bmatrix}\)</p>
+<ul>
+  <li>Direction of $x: (1, 1)$</li>
+</ul>
+
+\[A(1, 1) = (1998, 1996) \implies \text{ large magnitude}\]
+
+<ul>
+  <li>Direction of $x: (1, -1)$</li>
+</ul>
+
+\[A(1, -1) = (2, 2) \implies \text{ small magnitude}\]
+
+<p><strong>Here, we see that same length inputs have been transformed to wildly different outputs based on the direction of the input.</strong>
+<br />
+Now, if we look at the same problem from different lens, i.e., how different directions of perturbations in $b$ affect $x$, we get the results as shown in the following table:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Perturbations in $b$</th>
+      <th style="text-align: center">Direction of Perturbation in $b$</th>
+      <th>Effect on $x$</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Shift both equations equally</td>
+      <td style="text-align: center">(1, 1)</td>
+      <td>Least change</td>
+    </tr>
+    <tr>
+      <td>Shift only first equation</td>
+      <td style="text-align: center">(1, 0)</td>
+      <td>Large change</td>
+    </tr>
+    <tr>
+      <td>Shift equations oppositely</td>
+      <td style="text-align: center">(-1, 1)</td>
+      <td>Largest change</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><em><strong>NOTE</strong>: We will cover matrix sensitivity analysis in detail in a separate post.</em></p>
 
 <h2 id="properties-of-condition-number">Properties of Condition Number</h2>
 <ul>
@@ -293,6 +351,8 @@ $m_2 \approx -999/997 \approx -1.002006018054$ <br /></p>
 <h3 id="decomposition-of-ill-conditioning-obsidian-notes">Decomposition of ill-conditioning (obsidian notes)</h3>
 <h3 id="discuss-example-228-fundamnetals-of-matrix-computation-fmc">Discuss example 2.2.8 (Fundamnetals of Matrix Computation (FMC))</h3>
 <h3 id="discuss-how-cond-numb-is-subjective-pg-125--126-fmc">Discuss how Cond Numb is subjective Pg 125 &amp; 126 (FMC)</h3>
+
+<p>So far we have covered blah blah, but let’s look at the geometry of the transformation and also ways to calculate condition number using max &amp; min magnification</p>
 
 <h2 id="geometric-interpretation">Geometric Interpretation</h2>
 

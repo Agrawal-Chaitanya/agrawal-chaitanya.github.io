@@ -78,8 +78,8 @@ $$
 \begin{bmatrix} x_1 \\
                 x_2
                 \end{bmatrix} =
-\begin{bmatrix} 1998 \\
-                1996
+\begin{bmatrix} b_1 \\
+                b_2
                 \end{bmatrix}
 $$ 
 
@@ -87,11 +87,11 @@ $$
 This is a system of two linear equations: 
 
 $$
-1000x_1+998x_2=1998 
+1000x_1+998x_2=b_1 
 $$
 
 $$
-999x_1 + 997x_2=1996,
+999x_1 + 997x_2=b_2,
 $$
 
 
@@ -100,7 +100,7 @@ each of which represents a line in the plane. The slopes of the lines are:
 $m_1 \approx -1000/998 \approx -1.002004008016$ <br>
 $m_2 \approx -999/997 \approx -1.002006018054$ <br>
 
-Thus the solution of the system (point 'a') is the intersection of two nearly parallel lines. Now, a small perturbation in the first line will cause a parallel shift in the line. The new perturbed line is denoted by dashed line. Since both lines are almost parallel, even a small shift in any of the lines cause a drastic shift in the solution from point 'a' to 'b' (as shown in figure below). 
+Thus the solution of the system (point 'a') is the intersection of two nearly parallel lines. Now, let's make a small perturbation in the first line, which will cause a parallel shift in the line. The new perturbed line is denoted by dashed line. Since both lines are almost parallel, even a small shift in any of the lines cause a drastic shift in the solution from point 'a' to 'b' (as shown in figure below). 
 
 
 This shows that this system of equations or the given matrix $A$ is ill-conditioned, as also suggested by very high condition number.
@@ -109,6 +109,44 @@ This shows that this system of equations or the given matrix $A$ is ill-conditio
 <img src="/linear-algebra/images/condition_number-parallel_lines.jpg">
 </p>
 
+
+
+> A large condition number means the matrix treats different directions very unevenly.
+
+In other words, a matrix has a large condition number if it stretches unit vectors by very different amounts depending on their direction, strongly amplifying some directions while almost annihilating others.
+
+Let's use the above matrix $A$ to explain aforementioned statement:
+
+For 
+$$A = \begin{bmatrix} 
+1000 & 998 \\
+999 & 997 
+\end{bmatrix}
+$$
+- Direction of $x: (1, 1)$
+
+$$
+A(1, 1) = (1998, 1996) \implies \text{ large magnitude}
+$$
+
+- Direction of $x: (1, -1)$
+
+$$
+A(1, -1) = (2, 2) \implies \text{ small magnitude}
+$$
+
+**Here, we see that same length inputs have been transformed to wildly different outputs based on the direction of the input.**
+<br>
+Now, if we look at the same problem from different lens, i.e., how different directions of perturbations in $b$ affect $x$, we get the results as shown in the following table:
+
+
+|Perturbations in $b$|Direction of Perturbation in $b$| Effect on $x$|
+|---------|:---------:|----------|
+|Shift both equations equally|(1, 1)|Least change|
+|Shift only first equation|(1, 0)| Large change|
+|Shift equations oppositely| (-1, 1)|Largest change|
+
+***NOTE**: We will cover matrix sensitivity analysis in detail in a separate post.*
 
 ## Properties of Condition Number
 -  **$\kappa(A) \geq 1$**, for square invertible matrices <br>
@@ -137,6 +175,7 @@ This shows that this system of equations or the given matrix $A$ is ill-conditio
 ### Discuss how Cond Numb is subjective Pg 125 & 126 (FMC)
 
 
+So far we have covered blah blah, but let's look at the geometry of the transformation and also ways to calculate condition number using max & min magnification
 
 ## Geometric Interpretation 
 
