@@ -254,6 +254,50 @@ $$
 If you notice the above equation, it is an equation of an ellipse in $\mathbb{R}^2$. <br>
 It means a unit circle is getting transformed to an ellipse on the application of matrix $A$.
 
+<p align="center">
+<img src="/linear-algebra/images/condition_number-circle_2_ellipse.jpg" style="width: 50%;">
+</p>
+
+### Introducing Maximum and Minimum Magnification
+
+Once the unit circle is transformed into an ellipse, an important geometric fact becomes visible: **not all directions are stretched equally**.
+
+Some unit vectors are stretched the most, landing at the tips of the ellipse’s **major axis**, while others are stretched the least, landing at the ends of the **minor axis**.
+
+These two extreme stretch factors play a central role:
+- The **maximum magnification** is the **largest length** attained by $\lVert Ax \rVert$ among all unit vector $\lVert x \rVert_2 =1$
+- The **minimum magnification** is the **smallest length** attained by $\lVert Ax \rVert$ among all unit vector $\lVert x \rVert_2 =1$
+
+**Geometrically, they correspond exactly to the lengths of the major and minor semi-axes of the ellipse produced by applying $A$ to the unit circle.**
+
+Given below is the mathematical definitions of maximum & minimum magnifications of $A \in \mathbb{R}^{n \times n}$ :
+
+- **Maximum Magnification**:
+
+    $$
+    \begin{equation}
+    maxmag(A) = \max_{\mathbf{x} \neq \mathbf{0}} \frac{\|A\mathbf{x}\|_2}{\|\mathbf{x}\|_2} = \max_{\|\mathbf{x}\|_2=1} \|A\mathbf{x}\|_2 = \|A\|_2
+    \end{equation}
+    $$
+
+    corresponding to the length of the major semi-axis of the ellipse. <br>
+    Since matrix 2-norm is the largest factor by which a matrix $A$ can stretch a unit vector, maximum magnification is nothing but the induced matrix norm $\lVert A \rVert_2$
+
+- **Minimum Magnification**: 
+
+    $$
+    \begin{equation}
+    minmag(A) = \min_{\mathbf{x} \neq \mathbf{0}} \frac{\|A\mathbf{x}\|_2}{\|\mathbf{x}\|_2} = \min_{\|\mathbf{x}\|_2=1} \|A\mathbf{x}\|_2
+    \end{equation}
+    $$
+
+    corresponding to the length of the minor semi-axis of the ellipse.
+
+
+
+Next: https://chatgpt.com/s/t_696fe15315588191a763c9b8704dee89
+
+
 
 “To make this concrete, consider how a matrix transforms the unit circle…”
 
