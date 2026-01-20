@@ -177,7 +177,7 @@
           <aside class="sidebar__right sticky">
             <nav class="toc">
               <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On this page</h4></header>
-              <ul class="toc__menu"><li><a href="#the-steering-wheel-analogy">The Steering Wheel Analogy</a></li><li><a href="#bridging-the-gap-from-cars-to-matrices">Bridging the Gap: From Cars to Matrices</a><ul><li><a href="#example-of-an-ill-conditioned-system">Example of an Ill-Conditioned System</a></li></ul></li><li><a href="#properties-of-condition-number">Properties of Condition Number</a><ul><li><a href="#decomposition-of-ill-conditioning-obsidian-notes">Decomposition of ill-conditioning (obsidian notes)</a></li><li><a href="#discuss-example-228-fundamnetals-of-matrix-computation-fmc">Discuss example 2.2.8 (Fundamnetals of Matrix Computation (FMC))</a></li><li><a href="#discuss-how-cond-numb-is-subjective-pg-125--126-fmc">Discuss how Cond Numb is subjective Pg 125 &amp; 126 (FMC)</a></li></ul></li><li><a href="#geometric-interpretation">Geometric Interpretation</a><ul><li><a href="#example-2216">Example 2.2.16</a></li><li><a href="#ill-conditioning-due-to-poor-scaling-pg-130---fmc">Ill-conditioning due to poor scaling (Pg 130 - FMC)</a></li><li><a href="#condition-number-in-multicollienarity">Condition Number in Multicollienarity</a></li></ul></li><li><a href="#appendix">Appendix</a></li></ul>
+              <ul class="toc__menu"><li><a href="#the-steering-wheel-analogy">The Steering Wheel Analogy</a></li><li><a href="#bridging-the-gap-from-cars-to-matrices">Bridging the Gap: From Cars to Matrices</a><ul><li><a href="#example-of-an-ill-conditioned-system">Example of an Ill-Conditioned System</a></li></ul></li><li><a href="#properties-of-condition-number">Properties of Condition Number</a><ul><li><a href="#decomposition-of-ill-conditioning-obsidian-notes">Decomposition of ill-conditioning (obsidian notes)</a></li><li><a href="#discuss-how-cond-numb-is-subjective-pg-125--126-fmc">Discuss how Cond Numb is subjective Pg 125 &amp; 126 (FMC)</a></li></ul></li><li><a href="#geometric-interpretation">Geometric Interpretation</a><ul><li><a href="#example-2216">Example 2.2.16</a></li><li><a href="#ill-conditioning-due-to-poor-scaling-pg-130---fmc">Ill-conditioning due to poor scaling (Pg 130 - FMC)</a></li><li><a href="#condition-number-in-multicollienarity">Condition Number in Multicollienarity</a></li></ul></li><li><a href="#appendix">Appendix</a></li></ul>
             </nav>
           </aside>
         
@@ -262,6 +262,14 @@ $m_2 \approx -999/997 \approx -1.002006018054$ <br /></p>
 <img src="/linear-algebra/images/condition_number-parallel_lines.jpg" />
 </p>
 
+<p>The geometric picture above explains <em>what</em> goes wrong, but not yet <em>why</em> it goes wrong at a deeper level.<br />
+The instability does not arise merely because the two lines are almost parallel; near-parallelism is only a <strong>geometric symptom</strong> of a more fundamental property of the matrix (A).</p>
+
+<p>Specifically, an ill-conditioned matrix acts very differently on different directions in the input space.<br />
+Some directions are strongly amplified, while others are barely changed. When the right-hand side (b) is perturbed along these sensitive directions, the solution (x) can change dramatically, even if the perturbation itself is small.</p>
+
+<p>To make this precise, we now shift our viewpoint from intersecting lines to how a matrix transforms vectors in different directions.</p>
+
 <blockquote>
   <p>A large condition number means the matrix treats different directions very unevenly.</p>
 </blockquote>
@@ -287,38 +295,25 @@ $m_2 \approx -999/997 \approx -1.002006018054$ <br /></p>
 
 \[A(1, -1) = (2, 2) \implies \text{ small magnitude}\]
 
-<p><strong>Here, we see that same length inputs have been transformed to wildly different outputs based on the direction of the input.</strong>
-<br />
-Now, if we look at the same problem from different lens, i.e., how different directions of perturbations in $b$ affect $x$, we get the results as shown in the following table:</p>
+<p><strong>Here, we see that same length inputs have been transformed to wildly different outputs based on the direction of the input.</strong></p>
 
-<table>
-  <thead>
-    <tr>
-      <th>Perturbations in $b$</th>
-      <th style="text-align: center">Direction of Perturbation in $b$</th>
-      <th>Effect on $x$</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Shift both equations equally</td>
-      <td style="text-align: center">(1, 1)</td>
-      <td>Least change</td>
-    </tr>
-    <tr>
-      <td>Shift only first equation</td>
-      <td style="text-align: center">(1, 0)</td>
-      <td>Large change</td>
-    </tr>
-    <tr>
-      <td>Shift equations oppositely</td>
-      <td style="text-align: center">(-1, 1)</td>
-      <td>Largest change</td>
-    </tr>
-  </tbody>
-</table>
+<p><br />
+Now, if we look at the same problem from a different perspective, i.e., how perturbations in different directions of $b$ affect the solution $x$.</p>
 
-<p><em><strong>NOTE</strong>: We will cover matrix sensitivity analysis in detail in a separate post.</em></p>
+<p>We can check the same using following equation:</p>
+
+\[\delta{x} = A^{-1}\delta{b}\]
+
+<p>For:</p>
+<ul>
+  <li>$\delta{b} = (1, 1) \implies \delta{x} = \begin{bmatrix} 0.5 \ -0.5 \end{bmatrix} \implies \lVert \delta{x} \rVert \approx 0.71 \implies \text{least change}$</li>
+  <li>$\delta{b} = (1, 0) \implies \delta{x} = \begin{bmatrix} -498.5 \ 499.5 \end{bmatrix} \implies \lVert \delta{x} \rVert \approx 705 \implies \text{large change}$</li>
+  <li>$\delta{b} = (1, -1) \implies \delta{x} = \begin{bmatrix} -997.5 \ 999.5 \end{bmatrix} \implies \lVert \delta{x} \rVert \approx 1412 \implies \text{largest change}$</li>
+</ul>
+
+<p>We observe that the same directions identified above yield the largest and smallest perturbations in $x$ for a given magnitude of perturbation in $b$.</p>
+
+<p><em><strong>NOTE</strong>: We will cover matrix sensitivity analysis in detail in a separate post where we will discuss how these directions of least &amp; large impact on $x$ are calculated.</em></p>
 
 <h2 id="properties-of-condition-number">Properties of Condition Number</h2>
 <ul>
@@ -349,12 +344,80 @@ Now, if we look at the same problem from different lens, i.e., how different dir
 </ul>
 
 <h3 id="decomposition-of-ill-conditioning-obsidian-notes">Decomposition of ill-conditioning (obsidian notes)</h3>
-<h3 id="discuss-example-228-fundamnetals-of-matrix-computation-fmc">Discuss example 2.2.8 (Fundamnetals of Matrix Computation (FMC))</h3>
 <h3 id="discuss-how-cond-numb-is-subjective-pg-125--126-fmc">Discuss how Cond Numb is subjective Pg 125 &amp; 126 (FMC)</h3>
 
 <p>So far we have covered blah blah, but let’s look at the geometry of the transformation and also ways to calculate condition number using max &amp; min magnification</p>
 
 <h2 id="geometric-interpretation">Geometric Interpretation</h2>
+
+<p>A deeper understanding of the condition number emerges when we view a matrix as a geometric transformation.</p>
+
+<p>A matrix stretches unit vectors by different amounts depending on their direction, leading to maximum and minimum magnifications.<br />
+The condition number precisely measures this disparity. It is the ratio between the largest and smallest magnifications induced by the matrix.</p>
+
+<p>Now, to visualize these magnifications, let’s understand how a matrix transforms a unit circle and what it becomes?</p>
+
+<p>Let $A \in \mathbb{R}^{n \times n}$ be an invertible matrix. Consider the set</p>
+
+\[\{x \in \mathbb{R}^n\mid \lVert x \rVert_2=1  \}\]
+
+<p>For $n=2$, we get a unit circle with center at $\begin{pmatrix} 0 \ 0\end{pmatrix}$ and radius $1$.</p>
+
+<p>Then, the above set of $x$ can be represented as:</p>
+
+\[\left\{ \begin{pmatrix} x_1 \\ x_2 \end{pmatrix} \in \mathbb{R^2}: x_1^2 + x_2^2=1 \right\} \text{, (} \because x_1^2 + x_2^2 = \lVert x \rVert_2^2 = \lVert x \rVert_2 = 1 \text{)}\]
+
+<p>On applying matrix $A$ to $x$, we get:</p>
+
+\[\begin{align*}
+&amp;\Rightarrow A \begin{pmatrix} x_1 \\ x_2 \end{pmatrix} = \begin{pmatrix} y_1 \\ y_2 \end{pmatrix} \text{, such that} \begin{pmatrix} y_1 \\ y_2 \end{pmatrix} \in \mathbb{R}^2 \\
+&amp;\Rightarrow \begin{pmatrix} x_1 \\ x_2 \end{pmatrix} = A^{-1} \begin{pmatrix} y_1 \\ y_2 \end{pmatrix} = B \begin{pmatrix} y_1 \\ y_2 \end{pmatrix} \text{, where } B = A^{-1} \\
+&amp;\Rightarrow \begin{pmatrix} x_1 \\ x_2 \end{pmatrix}= B \begin{pmatrix} y_1 \\ y_2 \end{pmatrix} = \begin{bmatrix} \cdots  b_1^T \cdots \\ \cdots b_2^T \cdots \end{bmatrix} 
+\begin{pmatrix} y_1 \\ y_2 \end{pmatrix} \\
+&amp;\Rightarrow x_1 = b_1^Ty  \text{ &amp; } x_2 = b_2^Ty
+\end{align*}\]
+
+<p>Since we know: $ x_1^2 + x_2^2 = 1$</p>
+
+\[\begin{align*}
+&amp;\Rightarrow (b_1^Ty)^2 + (b_2^Ty)^2 = 1 \text{ } \cdots \rightarrow (1)
+\end{align*}\]
+
+<p>As we already know,</p>
+
+\[\begin{align*}
+&amp;b_1^T = \begin{pmatrix} b_{11} &amp; b_{12} \end{pmatrix} \\
+&amp;b_2^T = \begin{pmatrix} b_{21} &amp; b_{22} \end{pmatrix} \\
+&amp;y = \begin{pmatrix} y_{1} \\ y_{2} \end{pmatrix}
+\end{align*}\]
+
+<p>Putting values of $b_1^T \text{, } b_2^T \text{, }y$ in the equation $(1)$ described above, we get:</p>
+
+\[\begin{align*}
+&amp;\Rightarrow (b_{11}y_1 + b_{12}y_2)^2 + (b_{21}y_1 + b_{22}y_2)^2 = 1 \\
+&amp;\Rightarrow y_1^2(b_{11}^2+b_{21}^2) + y_2^2(b_{12}^2+b_{22}^2) + 2y_1y_2(b_{11}b_{12}+b_{21}b_{22}) = 1 \\
+&amp;\Rightarrow y_1^2\beta_1 + y_2^2\beta_2 + 2y_1y_2\alpha = 1 \text{ , where } \alpha \text{ , } \beta_1 \text{ , } \beta_2 \text{ are constants}
+\end{align*}\]
+
+<p>If you notice the above equation, it is an equation of an ellipse in $\mathbb{R}^2$. <br />
+It means a unit circle is getting transformed to an ellipse on the application of matrix $A$.</p>
+
+<p>“To make this concrete, consider how a matrix transforms the unit circle…”</p>
+
+<p>Consider a unit cirecle, …… Check whether some information from either of the two options given below can be used.
+First we will show transformation of circle to ellipse. Then we will introduce magnifications based condition number and then proof of the magnification</p>
+
+<p>Option 2 (slightly more visual, prepares circle → ellipse)</p>
+
+<p>Geometrically, a matrix does not distort all directions equally.
+When a matrix acts on unit-length vectors, some directions are stretched the most (maximum magnification) while others are stretched the least (minimum magnification).
+The condition number quantifies how uneven this directional stretching is, linking algebraic sensitivity directly to geometric distortion.</p>
+
+<p>Option 3 (explicitly sets up the unit circle)</p>
+
+<p>To understand why a matrix amplifies errors, it helps to study how it transforms geometry.
+When a matrix acts on the unit circle, it stretches it into an ellipse, whose longest and shortest axes correspond to the maximum and minimum magnifications of the transformation.
+The condition number is simply the ratio of these two magnifications.</p>
 
 <ul>
   <li>First derive 2-Norm from max magnification &amp; min magnification</li>

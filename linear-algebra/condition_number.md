@@ -109,6 +109,13 @@ This shows that this system of equations or the given matrix $A$ is ill-conditio
 <img src="/linear-algebra/images/condition_number-parallel_lines.jpg">
 </p>
 
+The geometric picture above explains *what* goes wrong, but not yet *why* it goes wrong at a deeper level.  
+The instability does not arise merely because the two lines are almost parallel; near-parallelism is only a **geometric symptom** of a more fundamental property of the matrix \(A\).
+
+Specifically, an ill-conditioned matrix acts very differently on different directions in the input space.  
+Some directions are strongly amplified, while others are barely changed. When the right-hand side \(b\) is perturbed along these sensitive directions, the solution \(x\) can change dramatically, even if the perturbation itself is small.
+
+To make this precise, we now shift our viewpoint from intersecting lines to how a matrix transforms vectors in different directions.
 
 
 > A large condition number means the matrix treats different directions very unevenly.
@@ -136,17 +143,24 @@ A(1, -1) = (2, 2) \implies \text{ small magnitude}
 $$
 
 **Here, we see that same length inputs have been transformed to wildly different outputs based on the direction of the input.**
+
 <br>
-Now, if we look at the same problem from different lens, i.e., how different directions of perturbations in $b$ affect $x$, we get the results as shown in the following table:
+Now, if we look at the same problem from a different perspective, i.e., how perturbations in different directions of $b$ affect the solution $x$.
 
+We can check the same using following equation:
 
-|Perturbations in $b$|Direction of Perturbation in $b$| Effect on $x$|
-|---------|:---------:|----------|
-|Shift both equations equally|(1, 1)|Least change|
-|Shift only first equation|(1, 0)| Large change|
-|Shift equations oppositely| (-1, 1)|Largest change|
+$$
+\delta{x} = A^{-1}\delta{b}
+$$
 
-***NOTE**: We will cover matrix sensitivity analysis in detail in a separate post.*
+For:
+- $\delta{b} = (1, 1) \implies \delta{x} = \begin{bmatrix} 0.5 \\ -0.5 \end{bmatrix} \implies \lVert \delta{x} \rVert \approx 0.71 \implies \text{least change}$
+- $\delta{b} = (1, 0) \implies \delta{x} = \begin{bmatrix} -498.5 \\ 499.5 \end{bmatrix} \implies \lVert \delta{x} \rVert \approx 705 \implies \text{large change}$
+- $\delta{b} = (1, -1) \implies \delta{x} = \begin{bmatrix} -997.5 \\ 999.5 \end{bmatrix} \implies \lVert \delta{x} \rVert \approx 1412 \implies \text{largest change}$
+
+We observe that the same directions identified above yield the largest and smallest perturbations in $x$ for a given magnitude of perturbation in $b$.
+
+***NOTE**: We will cover matrix sensitivity analysis in detail in a separate post where we will discuss how these directions of least & large impact on $x$ are calculated.*
 
 ## Properties of Condition Number
 -  **$\kappa(A) \geq 1$**, for square invertible matrices <br>
@@ -171,13 +185,93 @@ Now, if we look at the same problem from different lens, i.e., how different dir
     $$= \lVert A \rVert \lVert A^{-1} \rVert = \kappa(A)$$
 
 ### Decomposition of ill-conditioning (obsidian notes)
-### Discuss example 2.2.8 (Fundamnetals of Matrix Computation (FMC))
 ### Discuss how Cond Numb is subjective Pg 125 & 126 (FMC)
 
 
 So far we have covered blah blah, but let's look at the geometry of the transformation and also ways to calculate condition number using max & min magnification
 
 ## Geometric Interpretation 
+
+A deeper understanding of the condition number emerges when we view a matrix as a geometric transformation.
+
+A matrix stretches unit vectors by different amounts depending on their direction, leading to maximum and minimum magnifications.<br>
+The condition number precisely measures this disparity. It is the ratio between the largest and smallest magnifications induced by the matrix.
+
+Now, to visualize these magnifications, let's understand how a matrix transforms a unit circle and what it becomes?
+
+Let $A \in \mathbb{R}^{n \times n}$ be an invertible matrix. Consider the set 
+
+$$\{x \in \mathbb{R}^n\mid \lVert x \rVert_2=1  \}$$
+
+For $n=2$, we get a unit circle with center at $\begin{pmatrix} 0 \\ 0\end{pmatrix}$ and radius $1$.
+
+Then, the above set of $x$ can be represented as:
+
+$$
+\left\{ \begin{pmatrix} x_1 \\ x_2 \end{pmatrix} \in \mathbb{R^2}: x_1^2 + x_2^2=1 \right\} \text{, (} \because x_1^2 + x_2^2 = \lVert x \rVert_2^2 = \lVert x \rVert_2 = 1 \text{)}
+$$
+
+On applying matrix $A$ to $x$, we get:
+
+$$
+\begin{align*}
+&\Rightarrow A \begin{pmatrix} x_1 \\ x_2 \end{pmatrix} = \begin{pmatrix} y_1 \\ y_2 \end{pmatrix} \text{, such that} \begin{pmatrix} y_1 \\ y_2 \end{pmatrix} \in \mathbb{R}^2 \\
+&\Rightarrow \begin{pmatrix} x_1 \\ x_2 \end{pmatrix} = A^{-1} \begin{pmatrix} y_1 \\ y_2 \end{pmatrix} = B \begin{pmatrix} y_1 \\ y_2 \end{pmatrix} \text{, where } B = A^{-1} \\
+&\Rightarrow \begin{pmatrix} x_1 \\ x_2 \end{pmatrix}= B \begin{pmatrix} y_1 \\ y_2 \end{pmatrix} = \begin{bmatrix} \cdots  b_1^T \cdots \\ \cdots b_2^T \cdots \end{bmatrix} 
+\begin{pmatrix} y_1 \\ y_2 \end{pmatrix} \\
+&\Rightarrow x_1 = b_1^Ty  \text{ & } x_2 = b_2^Ty
+\end{align*}
+$$
+
+Since we know: $ x_1^2 + x_2^2 = 1$
+
+$$
+\begin{align*}
+&\Rightarrow (b_1^Ty)^2 + (b_2^Ty)^2 = 1 \text{ } \cdots \rightarrow (1)
+\end{align*}
+$$
+
+As we already know,
+
+$$
+\begin{align*}
+&b_1^T = \begin{pmatrix} b_{11} & b_{12} \end{pmatrix} \\
+&b_2^T = \begin{pmatrix} b_{21} & b_{22} \end{pmatrix} \\
+&y = \begin{pmatrix} y_{1} \\ y_{2} \end{pmatrix}
+\end{align*}
+$$
+
+Putting values of $b_1^T \text{, } b_2^T \text{, }y$ in the equation $\(1)$ described above, we get:
+
+$$
+\begin{align*}
+&\Rightarrow (b_{11}y_1 + b_{12}y_2)^2 + (b_{21}y_1 + b_{22}y_2)^2 = 1 \\
+&\Rightarrow y_1^2(b_{11}^2+b_{21}^2) + y_2^2(b_{12}^2+b_{22}^2) + 2y_1y_2(b_{11}b_{12}+b_{21}b_{22}) = 1 \\
+&\Rightarrow y_1^2\beta_1 + y_2^2\beta_2 + 2y_1y_2\alpha = 1 \text{ , where } \alpha \text{ , } \beta_1 \text{ , } \beta_2 \text{ are constants}
+\end{align*}
+$$
+
+If you notice the above equation, it is an equation of an ellipse in $\mathbb{R}^2$. <br>
+It means a unit circle is getting transformed to an ellipse on the application of matrix $A$.
+
+
+“To make this concrete, consider how a matrix transforms the unit circle…”
+
+Consider a unit cirecle, ...... Check whether some information from either of the two options given below can be used.
+First we will show transformation of circle to ellipse. Then we will introduce magnifications based condition number and then proof of the magnification
+
+Option 2 (slightly more visual, prepares circle → ellipse)
+
+Geometrically, a matrix does not distort all directions equally.
+When a matrix acts on unit-length vectors, some directions are stretched the most (maximum magnification) while others are stretched the least (minimum magnification).
+The condition number quantifies how uneven this directional stretching is, linking algebraic sensitivity directly to geometric distortion.
+
+Option 3 (explicitly sets up the unit circle)
+
+To understand why a matrix amplifies errors, it helps to study how it transforms geometry.
+When a matrix acts on the unit circle, it stretches it into an ellipse, whose longest and shortest axes correspond to the maximum and minimum magnifications of the transformation.
+The condition number is simply the ratio of these two magnifications.
+
 
 - First derive 2-Norm from max magnification & min magnification
 - Explain intuitively the above point
