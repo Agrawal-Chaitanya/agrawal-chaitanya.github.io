@@ -41,7 +41,7 @@ $$
 where, the factor $\lVert A \rVert \lVert A^{-1} \rVert$ is called the **condition number of A, $\kappa(A)$**, i.e., 
 
 $$
-\kappa(A) = \lVert A \rVert \lVert A^{-1} \rVert
+\kappa(A) = \lVert A \rVert \lVert A^{-1} \rVert \text{   } \cdots \rightarrow (1)
 $$
 
 So, **condition number** ($\kappa$) is essentially the **multiplier of error**.
@@ -227,7 +227,7 @@ Since we know: $ x_1^2 + x_2^2 = 1$
 
 $$
 \begin{align*}
-&\Rightarrow (b_1^Ty)^2 + (b_2^Ty)^2 = 1 \text{ } \cdots \rightarrow (1)
+&\Rightarrow (b_1^Ty)^2 + (b_2^Ty)^2 = 1 \text{ } \cdots \rightarrow (2)
 \end{align*}
 $$
 
@@ -241,7 +241,7 @@ $$
 \end{align*}
 $$
 
-Putting values of $b_1^T \text{, } b_2^T \text{, }y$ in the equation $\(1)$ described above, we get:
+Putting values of $b_1^T \text{, } b_2^T \text{, }y$ in the equation $\(2)$ described above, we get:
 
 $$
 \begin{align*}
@@ -255,7 +255,7 @@ If you notice the above equation, it is an equation of an ellipse in $\mathbb{R}
 It means a unit circle is getting transformed to an ellipse on the application of matrix $A$.
 
 <p align="center">
-<img src="/linear-algebra/images/condition_number-circle_2_ellipse.jpg" style="width: 50%;">
+<img src="/linear-algebra/images/condition_number_circle_2_ellipse.jpg" style="width: 50%;">
 </p>
 
 ### Introducing Maximum and Minimum Magnification
@@ -276,12 +276,12 @@ Given below is the mathematical definitions of maximum & minimum magnifications 
 
     $$
     \begin{equation}
-    maxmag(A) = \max_{\mathbf{x} \neq \mathbf{0}} \frac{\|A\mathbf{x}\|_2}{\|\mathbf{x}\|_2} = \max_{\|\mathbf{x}\|_2=1} \|A\mathbf{x}\|_2 = \|A\|_2
+    maxmag(A) = \max_{\mathbf{x} \neq \mathbf{0}} \frac{\|A\mathbf{x}\|_2}{\|\mathbf{x}\|_2} = \max_{\|\mathbf{x}\|_2=1} \|A\mathbf{x}\|_2 = \|A\|_2 \text{   } \cdots \rightarrow (3)
     \end{equation}
     $$
 
     corresponding to the length of the major semi-axis of the ellipse. <br>
-    Since matrix 2-norm is the largest factor by which a matrix $A$ can stretch a unit vector, maximum magnification is nothing but the induced matrix norm $\lVert A \rVert_2$
+    Since matrix 2-norm is the largest factor by which a matrix $A$ can stretch a unit vector, maximum magnification is nothing but the induced matrix norm $\lVert A \rVert_2$. [Proof](#appendix)
 
 - **Minimum Magnification**: 
 
@@ -292,6 +292,62 @@ Given below is the mathematical definitions of maximum & minimum magnifications 
     $$
 
     corresponding to the length of the minor semi-axis of the ellipse.
+
+
+### From Magnification to Condition Number
+
+At this stage, the geometric picture is complete: the action of a matrix on the unit circle produces an ellipse whose major and minor semi-axes represent the largest and smallest possible stretchings of unit vectors.
+
+What remains is to understand how this geometric distortion affects the behavior of solutions when the input is perturbed.
+
+Conditioning is not determined by how much a matrix stretches vectors in absolute terms, but by **how unevenly it stretches different directions**. If all directions are stretched by nearly the same amount, small perturbations behave predictably. 
+
+This directional imbalance is captured by comparing the two extremes.
+The condition number of a matrix is therefore defined as the ratio of its maximum to minimum magnification:
+
+$$
+\kappa(A)_2 = \frac{maxmag(A)}{minmag(A)}= \frac{\max_{\|\mathbf{x}\|_2=1} \|A\mathbf{x}\|_2}{\min_{\|\mathbf{x}\|_2=1} \|A\mathbf{x}\|_2} = \frac{\text{Length of major axis}}{\text{Length of minor axis}}
+$$
+
+The appearance of this ratio reflects the role of the inverse transformation. The ratio compares the largest and smallest magnifications induced by $A$. The largest magnification is governed directly by how much $A$ can stretch a unit vector, while the smallest magnification identifies directions that are strongly compressed by $A$.
+
+These compressed directions are exactly those along which small perturbations in $b$ lead to large changes in the solution $x$ when solving $Ax=b$. Recovering $x$ requires undoing this compression, and doing so demands strong expansion through the action of $A^{-1}$. Consequently, the smallest magnification of $A$ is controlled by the largest stretching of its inverse.
+
+This is why the condition number naturally involves both $A$ and $A^{-1}$. It measures the combined effect of the strongest forward stretching and the strongest expansion required to undo compression. In fact,
+
+$$
+minmag(A)= \min_{\|\mathbf{x}\|_2=1} \|A\mathbf{x}\|_2 = \frac{1}{\max_{\|\mathbf{y}\|_2=1} \|A^{-1}\mathbf{y}\|_2} = \frac{1}{\|A^{-1}\|_2} \text{    } \cdots \rightarrow(4)
+$$
+
+Using equation $(3)$ & $(4)$, we see that condition number as given in equation $(1)$ can be derived, i.e.,
+
+$$
+\kappa(A)_2 = \frac{maxmag(A)}{minmag(A)} = \|A\|_2\|A^{-1}\|_2
+$$
+
+Also, 
+
+$$
+maxmag(A^{-1}) = \frac{1}{minmag(A)}
+$$
+
+$$
+\therefore \kappa(A)_2 = maxmag(A)*maxmag(A^{-1})
+$$
+
+
+Geometrically, the condition number measures how elongated the ellipse is relative to the original unit circle.
+
+A nearly circular ellipse indicates that all directions are treated similarly, whereas a highly elongated ellipse indicates strong directional imbalance and heightened sensitivity to perturbations.
+
+## When Is a Condition Number “Too Large”?
+
+https://chatgpt.com/s/t_69711fabbc4c8191a4ee2f862007d7c3
+
+
+
+
+
 
 
 

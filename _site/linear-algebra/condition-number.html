@@ -177,7 +177,7 @@
           <aside class="sidebar__right sticky">
             <nav class="toc">
               <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On this page</h4></header>
-              <ul class="toc__menu"><li><a href="#the-steering-wheel-analogy">The Steering Wheel Analogy</a></li><li><a href="#bridging-the-gap-from-cars-to-matrices">Bridging the Gap: From Cars to Matrices</a><ul><li><a href="#example-of-an-ill-conditioned-system">Example of an Ill-Conditioned System</a></li></ul></li><li><a href="#properties-of-condition-number">Properties of Condition Number</a><ul><li><a href="#decomposition-of-ill-conditioning-obsidian-notes">Decomposition of ill-conditioning (obsidian notes)</a></li><li><a href="#discuss-how-cond-numb-is-subjective-pg-125--126-fmc">Discuss how Cond Numb is subjective Pg 125 &amp; 126 (FMC)</a></li></ul></li><li><a href="#geometric-interpretation">Geometric Interpretation</a><ul><li><a href="#introducing-maximum-and-minimum-magnification">Introducing Maximum and Minimum Magnification</a></li><li><a href="#example-2216">Example 2.2.16</a></li><li><a href="#ill-conditioning-due-to-poor-scaling-pg-130---fmc">Ill-conditioning due to poor scaling (Pg 130 - FMC)</a></li><li><a href="#condition-number-in-multicollienarity">Condition Number in Multicollienarity</a></li></ul></li><li><a href="#appendix">Appendix</a></li></ul>
+              <ul class="toc__menu"><li><a href="#the-steering-wheel-analogy">The Steering Wheel Analogy</a></li><li><a href="#bridging-the-gap-from-cars-to-matrices">Bridging the Gap: From Cars to Matrices</a><ul><li><a href="#example-of-an-ill-conditioned-system">Example of an Ill-Conditioned System</a></li></ul></li><li><a href="#properties-of-condition-number">Properties of Condition Number</a><ul><li><a href="#decomposition-of-ill-conditioning-obsidian-notes">Decomposition of ill-conditioning (obsidian notes)</a></li><li><a href="#discuss-how-cond-numb-is-subjective-pg-125--126-fmc">Discuss how Cond Numb is subjective Pg 125 &amp; 126 (FMC)</a></li></ul></li><li><a href="#geometric-interpretation">Geometric Interpretation</a><ul><li><a href="#introducing-maximum-and-minimum-magnification">Introducing Maximum and Minimum Magnification</a></li><li><a href="#from-magnification-to-condition-number">From Magnification to Condition Number</a></li></ul></li><li><a href="#when-is-a-condition-number-too-large">When Is a Condition Number “Too Large”?</a><ul><li><a href="#example-2216">Example 2.2.16</a></li><li><a href="#ill-conditioning-due-to-poor-scaling-pg-130---fmc">Ill-conditioning due to poor scaling (Pg 130 - FMC)</a></li><li><a href="#condition-number-in-multicollienarity">Condition Number in Multicollienarity</a></li></ul></li><li><a href="#appendix">Appendix</a></li></ul>
             </nav>
           </aside>
         
@@ -204,7 +204,7 @@ $\hat{x}=x+\delta{x}$.</p>
 
 <p>where, the factor $\lVert A \rVert \lVert A^{-1} \rVert$ is called the <strong>condition number of A, $\kappa(A)$</strong>, i.e.,</p>
 
-\[\kappa(A) = \lVert A \rVert \lVert A^{-1} \rVert\]
+\[\kappa(A) = \lVert A \rVert \lVert A^{-1} \rVert \text{   } \cdots \rightarrow (1)\]
 
 <p>So, <strong>condition number</strong> ($\kappa$) is essentially the <strong>multiplier of error</strong>.</p>
 <ul>
@@ -380,7 +380,7 @@ The condition number precisely measures this disparity. It is the ratio between 
 <p>Since we know: $ x_1^2 + x_2^2 = 1$</p>
 
 \[\begin{align*}
-&amp;\Rightarrow (b_1^Ty)^2 + (b_2^Ty)^2 = 1 \text{ } \cdots \rightarrow (1)
+&amp;\Rightarrow (b_1^Ty)^2 + (b_2^Ty)^2 = 1 \text{ } \cdots \rightarrow (2)
 \end{align*}\]
 
 <p>As we already know,</p>
@@ -391,7 +391,7 @@ The condition number precisely measures this disparity. It is the ratio between 
 &amp;y = \begin{pmatrix} y_{1} \\ y_{2} \end{pmatrix}
 \end{align*}\]
 
-<p>Putting values of $b_1^T \text{, } b_2^T \text{, }y$ in the equation $(1)$ described above, we get:</p>
+<p>Putting values of $b_1^T \text{, } b_2^T \text{, }y$ in the equation $(2)$ described above, we get:</p>
 
 \[\begin{align*}
 &amp;\Rightarrow (b_{11}y_1 + b_{12}y_2)^2 + (b_{21}y_1 + b_{22}y_2)^2 = 1 \\
@@ -403,7 +403,7 @@ The condition number precisely measures this disparity. It is the ratio between 
 It means a unit circle is getting transformed to an ellipse on the application of matrix $A$.</p>
 
 <p align="center">
-<img src="/linear-algebra/images/condition_number-circle_2_ellipse.jpg" style="width: 50%;" />
+<img src="/linear-algebra/images/condition_number_circle_2_ellipse.jpg" style="width: 50%;" />
 </p>
 
 <h3 id="introducing-maximum-and-minimum-magnification">Introducing Maximum and Minimum Magnification</h3>
@@ -427,11 +427,11 @@ It means a unit circle is getting transformed to an ellipse on the application o
     <p><strong>Maximum Magnification</strong>:</p>
 
 \[\begin{equation}
-  maxmag(A) = \max_{\mathbf{x} \neq \mathbf{0}} \frac{\|A\mathbf{x}\|_2}{\|\mathbf{x}\|_2} = \max_{\|\mathbf{x}\|_2=1} \|A\mathbf{x}\|_2 = \|A\|_2
+  maxmag(A) = \max_{\mathbf{x} \neq \mathbf{0}} \frac{\|A\mathbf{x}\|_2}{\|\mathbf{x}\|_2} = \max_{\|\mathbf{x}\|_2=1} \|A\mathbf{x}\|_2 = \|A\|_2 \text{   } \cdots \rightarrow (3)
   \end{equation}\]
 
     <p>corresponding to the length of the major semi-axis of the ellipse. <br />
-  Since matrix 2-norm is the largest factor by which a matrix $A$ can stretch a unit vector, maximum magnification is nothing but the induced matrix norm $\lVert A \rVert_2$</p>
+  Since matrix 2-norm is the largest factor by which a matrix $A$ can stretch a unit vector, maximum magnification is nothing but the induced matrix norm $\lVert A \rVert_2$. <a href="#appendix">Proof</a></p>
   </li>
   <li>
     <p><strong>Minimum Magnification</strong>:</p>
@@ -443,6 +443,45 @@ It means a unit circle is getting transformed to an ellipse on the application o
     <p>corresponding to the length of the minor semi-axis of the ellipse.</p>
   </li>
 </ul>
+
+<h3 id="from-magnification-to-condition-number">From Magnification to Condition Number</h3>
+
+<p>At this stage, the geometric picture is complete: the action of a matrix on the unit circle produces an ellipse whose major and minor semi-axes represent the largest and smallest possible stretchings of unit vectors.</p>
+
+<p>What remains is to understand how this geometric distortion affects the behavior of solutions when the input is perturbed.</p>
+
+<p>Conditioning is not determined by how much a matrix stretches vectors in absolute terms, but by <strong>how unevenly it stretches different directions</strong>. If all directions are stretched by nearly the same amount, small perturbations behave predictably.</p>
+
+<p>This directional imbalance is captured by comparing the two extremes.
+The condition number of a matrix is therefore defined as the ratio of its maximum to minimum magnification:</p>
+
+\[\kappa(A)_2 = \frac{maxmag(A)}{minmag(A)}= \frac{\max_{\|\mathbf{x}\|_2=1} \|A\mathbf{x}\|_2}{\min_{\|\mathbf{x}\|_2=1} \|A\mathbf{x}\|_2} = \frac{\text{Length of major axis}}{\text{Length of minor axis}}\]
+
+<p>The appearance of this ratio reflects the role of the inverse transformation. The ratio compares the largest and smallest magnifications induced by $A$. The largest magnification is governed directly by how much $A$ can stretch a unit vector, while the smallest magnification identifies directions that are strongly compressed by $A$.</p>
+
+<p>These compressed directions are exactly those along which small perturbations in $b$ lead to large changes in the solution $x$ when solving $Ax=b$. Recovering $x$ requires undoing this compression, and doing so demands strong expansion through the action of $A^{-1}$. Consequently, the smallest magnification of $A$ is controlled by the largest stretching of its inverse.</p>
+
+<p>This is why the condition number naturally involves both $A$ and $A^{-1}$. It measures the combined effect of the strongest forward stretching and the strongest expansion required to undo compression. In fact,</p>
+
+\[minmag(A)= \min_{\|\mathbf{x}\|_2=1} \|A\mathbf{x}\|_2 = \frac{1}{\max_{\|\mathbf{y}\|_2=1} \|A^{-1}\mathbf{y}\|_2} = \frac{1}{\|A^{-1}\|_2} \text{    } \cdots \rightarrow(4)\]
+
+<p>Using equation $(3)$ &amp; $(4)$, we see that condition number as given in equation $(1)$ can be derived, i.e.,</p>
+
+\[\kappa(A)_2 = \frac{maxmag(A)}{minmag(A)} = \|A\|_2\|A^{-1}\|_2\]
+
+<p>Also,</p>
+
+\[maxmag(A^{-1}) = \frac{1}{minmag(A)}\]
+
+\[\therefore \kappa(A)_2 = maxmag(A)*maxmag(A^{-1})\]
+
+<p>Geometrically, the condition number measures how elongated the ellipse is relative to the original unit circle.</p>
+
+<p>A nearly circular ellipse indicates that all directions are treated similarly, whereas a highly elongated ellipse indicates strong directional imbalance and heightened sensitivity to perturbations.</p>
+
+<h2 id="when-is-a-condition-number-too-large">When Is a Condition Number “Too Large”?</h2>
+
+<p>https://chatgpt.com/s/t_69711fabbc4c8191a4ee2f862007d7c3</p>
 
 <p>Next: https://chatgpt.com/s/t_696fe15315588191a763c9b8704dee89</p>
 
