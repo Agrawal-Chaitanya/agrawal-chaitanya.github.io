@@ -342,6 +342,96 @@ A nearly circular ellipse indicates that all directions are treated similarly, w
 
 ## When Is a Condition Number “Too Large”?
 
+So far, we have said that a matrix with a large condition number is ill-conditioned. However, this immediately raises an important and practical question:
+
+**Where exactly is the boundary between well-conditioned and ill-conditioned systems?**
+
+The short answer is: **there is no sharp cutoff.**
+
+Conditioning is inherently **context-dependent**. Whether a given condition number is acceptable or problematic depends on several factors, including:
+
+- the accuracy with which the input data is known,
+- the precision of the floating-point arithmetic used in computation, and
+- the amount of error we are willing to tolerate in the solution.
+
+To see this concretely, recall the fundamental perturbation bound for the linear system $Ax=b$:
+
+$$
+\frac{\|\delta{x}\|}{\|x\|} \leq \kappa(A) \frac{\|\delta{b}\|}{\|b\|} 
+$$
+
+
+This inequality tells us that the condition number acts as an upper bound on error amplification, i.e.,  relative errors in the input $b$ can be magnified by a factor as large as $\kappa(A)$ in the computed solution $x$.
+
+### Error in Input Data
+For example, suppose the components of $b$ are known to about four decimal places, meaning that we solve the following perturbed system:
+
+
+$$
+A(x + \delta{x}) = b + \delta{b}
+$$
+
+where
+
+$$
+\frac{\|\delta{b}\|}{\|b\|} \approx 10^{-4}
+$$
+
+Now, suppose: $\kappa(A) \approx 10^{2},$
+
+then the worst that can happen is:
+
+$$
+\frac{\|\delta{x}\|}{\|x\|} \approx 10^{-2}
+$$
+
+In other words, the relative error in the solution is at most about $1\%$.
+In many scientific and engineering applications, this level of error is entirely acceptable, and the matrix would reasonably be considered **well-conditioned**.
+
+Now contrast this with a matrix for which $
+\kappa(A) \approx 10^{4}$
+
+Then with the same input accuracy of $b$, the bound becomes:
+
+$$
+\frac{\|\delta{x}\|}{\|x\|} \approx 1
+$$
+
+i.e., error in $x$ could be as big as the $x$ itself. At this point, the computed result may be meaningless, and the matrix must be regarded as **ill-conditioned**.
+
+This simple comparison suggests that in this problem the boundary between well-conditioned and ill-conditioned matrices lies somewhere in the range $10^2$ to $10^4$.
+
+
+### The Role of Floating-Point Precision
+Sometimes, the dominant limitation is not the accuracy of the data, but the accuracy of the floating-point arithmetic itself.
+
+Even if $b$ were known exactly, numbers in a computer are stored with finite precision. For example, if numbers are only stored with precision of **seven decimal digits** in the computer, so rounding errors effectively introduce a perturbation of size 
+
+$$
+\frac{\|\delta{b}\|}{\|b\|} \approx 10^{-7}
+$$
+
+Then, if we have $\kappa(A) \approx 10^7$, then the error bound predicts:
+
+$$
+\frac{\|\delta{x}\|}{\|x\|} \lesssim 1
+$$
+
+meaning that we can not be sure to get a reliable answer, even if we solve the system very accurately.
+
+On the other hand, depending on how accurate a solution is required to be, condition numbers of $10^3, 10^4,$ or even $10^5$ may be small enough, depending on how accurate we want the solution to be.
+
+
+**The key takeaway is that conditioning is not an absolute property**.
+
+A condition number that is unacceptable in one setting may be entirely harmless in another. What matters is the interaction between:
+
+- data accuracy,
+- numerical precision, and
+- error tolerance.
+
+This is why numerical analysts avoid rigid thresholds and instead interpret condition numbers **relative to the problem at hand**.
+
 https://chatgpt.com/s/t_69711fabbc4c8191a4ee2f862007d7c3
 
 
