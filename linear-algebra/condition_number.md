@@ -513,7 +513,7 @@ The apparent **ill-conditioning was entirely due to poor scaling**, not to any i
 Let $A$ be any non-singular matrix with columns $a_1, a_2, a_3, ... , a_n$, then
 
 $$
-\kappa_p(A) = \frac{\|a_i\|_p}{\|a_j\|_p}, \text{ } 1 \leq p \leq \infty
+\kappa_p(A) \geq \frac{\|a_i\|_p}{\|a_j\|_p}, \text{ } 1 \leq p \leq \infty
 $$
 
 This inequality tell us that if the ratio of the lengths of the columns is very large, then the condition number is going to be very high, which implies the matrix is ill-conditioned.
