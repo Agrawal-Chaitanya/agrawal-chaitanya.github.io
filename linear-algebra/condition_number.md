@@ -432,6 +432,100 @@ A condition number that is unacceptable in one setting may be entirely harmless 
 
 This is why numerical analysts avoid rigid thresholds and instead interpret condition numbers **relative to the problem at hand**.
 
+
+## Ill-Conditioning Caused by Poor Scaling
+
+Not all ill-conditioned systems are ill-conditioned because of deep geometric reasons such as near-parallel rows or directions of extreme stretching.
+Sometimes, ill-conditioning appears **simply because the system is poorly scaled**.
+
+i.e., the variables or equations operate at very different numerical magnitudes.
+
+
+**A simple example**:
+
+Consider the linear system
+
+$$
+\begin{bmatrix} 1 & 0\\
+                0 & \epsilon  \end{bmatrix} 
+\begin{bmatrix} x_1\\
+                x_2   \end{bmatrix}=
+\begin{bmatrix} 1 \\
+                \epsilon  \end{bmatrix}, \epsilon \ll 1 
+$$
+
+The unique solution is: $$x =\begin{bmatrix} 1 \\
+                            1  \end{bmatrix}$$
+
+
+Despite this perfectly reasonable solution, the coefficient matrix is **ill-conditioned when $\epsilon \ll 1$**. <br>
+In fact:
+
+$$\kappa_2(A)= \frac{1}{\epsilon}$$
+
+As $\epsilon$ becomes small, the condition number becomes very large.
+
+This system therefore exhibits all the familiar symptoms of ill-conditioning.
+
+Now perturb only the second component of $b$:
+
+$$
+\delta{b} = \begin{bmatrix} 0 \\ \epsilon \end{bmatrix}, \text{ }b + \delta{b} = \begin{bmatrix} 1 \\ 2\epsilon \end{bmatrix}
+$$
+
+Now, measuring relative perturbation in $b$: 
+
+
+$$
+\frac{\|\delta{b}\|}{\|b\|} \approx \epsilon \text{, which is very small,}
+$$
+
+yet the new solution becomes
+
+$$
+x + \delta{x} = \begin{bmatrix} 1 \\ 2 \end{bmatrix}
+$$
+
+which is far from the original solution $\begin{bmatrix} 1 \\ 1 \end{bmatrix}$.
+
+Here, we notice that perturbation in $b$ is small relative to $\|b\|$, but **not small relative to the component that was perturbed**, i.e., $b_{21}$.
+
+
+Now, if we rescale the by second equation by dividing it by $\epsilon$, the system becomes:
+
+$$
+\begin{bmatrix} 1 & 0\\
+                0 & 1  \end{bmatrix} 
+\begin{bmatrix} x_1\\
+                x_2   \end{bmatrix}=
+\begin{bmatrix} 1 \\
+                1  \end{bmatrix},
+$$
+
+which is **perfectly well-conditioned**.
+
+
+Nothing about the underlying solution changed.
+The apparent **ill-conditioning was entirely due to poor scaling**, not to any intrinsic instability in the problem itself.
+
+**Column & Row Scaling**
+
+Let $A$ be any non-singular matrix with columns $a_1, a_2, a_3, ... , a_n$, then
+
+$$
+\kappa_p(A) = \frac{\|a_i\|_p}{\|a_j\|_p}, \text{ } 1 \leq p \leq \infty
+$$
+
+This inequality tell us that if the ratio of the lengths of the columns is very large, then the condition number is going to be very high, which implies the matrix is ill-conditioned.
+
+The same statement applies to rows as well, since a **matrix is ill-conditioned if and only if its transpose is ill-conditioned** (i.e., $\kappa_2(A) = \kappa_2(A^T)$).
+
+>Therefore, a necessary condition for a matrix to be well-conditioned is that all of its rows and columns have roughly the same magnitude.
+
+This condition, however, is **not sufficient**.
+Even well-scaled matrices can be ill-conditioned for deeper geometric reasons, as we have already seen.
+
+
 https://chatgpt.com/s/t_69711fabbc4c8191a4ee2f862007d7c3
 
 

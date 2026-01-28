@@ -177,7 +177,7 @@
           <aside class="sidebar__right sticky">
             <nav class="toc">
               <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On this page</h4></header>
-              <ul class="toc__menu"><li><a href="#the-steering-wheel-analogy">The Steering Wheel Analogy</a></li><li><a href="#bridging-the-gap-from-cars-to-matrices">Bridging the Gap: From Cars to Matrices</a><ul><li><a href="#example-of-an-ill-conditioned-system">Example of an Ill-Conditioned System</a></li></ul></li><li><a href="#properties-of-condition-number">Properties of Condition Number</a><ul><li><a href="#decomposition-of-ill-conditioning-obsidian-notes">Decomposition of ill-conditioning (obsidian notes)</a></li><li><a href="#discuss-how-cond-numb-is-subjective-pg-125--126-fmc">Discuss how Cond Numb is subjective Pg 125 &amp; 126 (FMC)</a></li></ul></li><li><a href="#geometric-interpretation">Geometric Interpretation</a><ul><li><a href="#introducing-maximum-and-minimum-magnification">Introducing Maximum and Minimum Magnification</a></li><li><a href="#from-magnification-to-condition-number">From Magnification to Condition Number</a></li></ul></li><li><a href="#when-is-a-condition-number-too-large">When Is a Condition Number “Too Large”?</a><ul><li><a href="#error-in-input-data">Error in Input Data</a></li><li><a href="#the-role-of-floating-point-precision">The Role of Floating-Point Precision</a></li><li><a href="#example-2216">Example 2.2.16</a></li><li><a href="#ill-conditioning-due-to-poor-scaling-pg-130---fmc">Ill-conditioning due to poor scaling (Pg 130 - FMC)</a></li><li><a href="#condition-number-in-multicollienarity">Condition Number in Multicollienarity</a></li></ul></li><li><a href="#appendix">Appendix</a></li></ul>
+              <ul class="toc__menu"><li><a href="#the-steering-wheel-analogy">The Steering Wheel Analogy</a></li><li><a href="#bridging-the-gap-from-cars-to-matrices">Bridging the Gap: From Cars to Matrices</a><ul><li><a href="#example-of-an-ill-conditioned-system">Example of an Ill-Conditioned System</a></li></ul></li><li><a href="#properties-of-condition-number">Properties of Condition Number</a><ul><li><a href="#decomposition-of-ill-conditioning-obsidian-notes">Decomposition of ill-conditioning (obsidian notes)</a></li><li><a href="#discuss-how-cond-numb-is-subjective-pg-125--126-fmc">Discuss how Cond Numb is subjective Pg 125 &amp; 126 (FMC)</a></li></ul></li><li><a href="#geometric-interpretation">Geometric Interpretation</a><ul><li><a href="#introducing-maximum-and-minimum-magnification">Introducing Maximum and Minimum Magnification</a></li><li><a href="#from-magnification-to-condition-number">From Magnification to Condition Number</a></li></ul></li><li><a href="#when-is-a-condition-number-too-large">When Is a Condition Number “Too Large”?</a><ul><li><a href="#error-in-input-data">Error in Input Data</a></li><li><a href="#the-role-of-floating-point-precision">The Role of Floating-Point Precision</a></li></ul></li><li><a href="#ill-conditioning-caused-by-poor-scaling">Ill-Conditioning Caused by Poor Scaling</a><ul><li><a href="#example-2216">Example 2.2.16</a></li><li><a href="#ill-conditioning-due-to-poor-scaling-pg-130---fmc">Ill-conditioning due to poor scaling (Pg 130 - FMC)</a></li><li><a href="#condition-number-in-multicollienarity">Condition Number in Multicollienarity</a></li></ul></li><li><a href="#appendix">Appendix</a></li></ul>
             </nav>
           </aside>
         
@@ -556,6 +556,83 @@ In many scientific and engineering applications, this level of error is entirely
 </ul>
 
 <p>This is why numerical analysts avoid rigid thresholds and instead interpret condition numbers <strong>relative to the problem at hand</strong>.</p>
+
+<h2 id="ill-conditioning-caused-by-poor-scaling">Ill-Conditioning Caused by Poor Scaling</h2>
+
+<p>Not all ill-conditioned systems are ill-conditioned because of deep geometric reasons such as near-parallel rows or directions of extreme stretching.
+Sometimes, ill-conditioning appears <strong>simply because the system is poorly scaled</strong>.</p>
+
+<p>i.e., the variables or equations operate at very different numerical magnitudes.</p>
+
+<p><strong>A simple example</strong>:</p>
+
+<p>Consider the linear system</p>
+
+\[\begin{bmatrix} 1 &amp; 0\\
+                0 &amp; \epsilon  \end{bmatrix} 
+\begin{bmatrix} x_1\\
+                x_2   \end{bmatrix}=
+\begin{bmatrix} 1 \\
+                \epsilon  \end{bmatrix}, \epsilon \ll 1\]
+
+<p>The unique solution is: \(x =\begin{bmatrix} 1 \\
+                            1  \end{bmatrix}\)</p>
+
+<p>Despite this perfectly reasonable solution, the coefficient matrix is <strong>ill-conditioned when $\epsilon \ll 1$</strong>. <br />
+In fact:</p>
+
+\[\kappa_2(A)= \frac{1}{\epsilon}\]
+
+<p>As $\epsilon$ becomes small, the condition number becomes very large.</p>
+
+<p>This system therefore exhibits all the familiar symptoms of ill-conditioning.</p>
+
+<p>Now perturb only the second component of $b$:</p>
+
+\[\delta{b} = \begin{bmatrix} 0 \\ \epsilon \end{bmatrix}, \text{ }b + \delta{b} = \begin{bmatrix} 1 \\ 2\epsilon \end{bmatrix}\]
+
+<p>Now, measuring relative perturbation in $b$:</p>
+
+\[\frac{\|\delta{b}\|}{\|b\|} \approx \epsilon \text{, which is very small,}\]
+
+<p>yet the new solution becomes</p>
+
+\[x + \delta{x} = \begin{bmatrix} 1 \\ 2 \end{bmatrix}\]
+
+<p>which is far from the original solution $\begin{bmatrix} 1 \ 1 \end{bmatrix}$.</p>
+
+<p>Here, we notice that perturbation in $b$ is small relative to $|b|$, but <strong>not small relative to the component that was perturbed</strong>, i.e., $b_{21}$.</p>
+
+<p>Now, if we rescale the by second equation by dividing it by $\epsilon$, the system becomes:</p>
+
+\[\begin{bmatrix} 1 &amp; 0\\
+                0 &amp; 1  \end{bmatrix} 
+\begin{bmatrix} x_1\\
+                x_2   \end{bmatrix}=
+\begin{bmatrix} 1 \\
+                1  \end{bmatrix},\]
+
+<p>which is <strong>perfectly well-conditioned</strong>.</p>
+
+<p>Nothing about the underlying solution changed.
+The apparent <strong>ill-conditioning was entirely due to poor scaling</strong>, not to any intrinsic instability in the problem itself.</p>
+
+<p><strong>Column &amp; Row Scaling</strong></p>
+
+<p>Let $A$ be any non-singular matrix with columns $a_1, a_2, a_3, … , a_n$, then</p>
+
+\[\kappa_p(A) = \frac{\|a_i\|_p}{\|a_j\|_p}, \text{ } 1 \leq p \leq \infty\]
+
+<p>This inequality tell us that if the ratio of the lengths of the columns is very large, then the condition number is going to be very high, which implies the matrix is ill-conditioned.</p>
+
+<p>The same statement applies to rows as well, since a <strong>matrix is ill-conditioned if and only if its transpose is ill-conditioned</strong> (i.e., $\kappa_2(A) = \kappa_2(A^T)$).</p>
+
+<blockquote>
+  <p>Therefore, a necessary condition for a matrix to be well-conditioned is that all of its rows and columns have roughly the same magnitude.</p>
+</blockquote>
+
+<p>This condition, however, is <strong>not sufficient</strong>.
+Even well-scaled matrices can be ill-conditioned for deeper geometric reasons, as we have already seen.</p>
 
 <p>https://chatgpt.com/s/t_69711fabbc4c8191a4ee2f862007d7c3</p>
 
