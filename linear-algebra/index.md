@@ -1,5 +1,5 @@
 ---
-layout: single
+layout: collection
 title: Linear Algebra
 permalink: /linear-algebra/
 ---
