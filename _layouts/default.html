@@ -15,17 +15,18 @@
 
     <div class="initial-content">
       {{ content }}
+        {% if page.layout == "single" %}
+          <script src="https://utteranc.es/client.js"
+                  repo="Agrawal-Chaitanya/agrawal-chaitanya.github.io"
+                  issue-term="pathname"
+                  label="Comment"
+                  theme="preferred-color-scheme"
+                  crossorigin="anonymous"
+                  async>
+          </script>
+        {% endif %}
       {% include after-content.html %}
     </div>
-
-    <script src="https://utteranc.es/client.js"
-        repo="https://github.com/Agrawal-Chaitanya/agrawal-chaitanya.github.io"
-        issue-term="pathname"
-        label="Comment"
-        theme="preferred-color-scheme"
-        crossorigin="anonymous"
-        async>
-    </script>
 
     {% if site.search == true %}
       <div class="search-content">
