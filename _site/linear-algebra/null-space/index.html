@@ -214,7 +214,7 @@
           <aside class="sidebar__right sticky">
             <nav class="toc">
               <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On this page</h4></header>
-              <ul class="toc__menu"><li><a href="#lets-start-with-a-question">Let’s Start with a Question!</a></li><li><a href="#too-many-solutions-welcome-to-the-null-space">Too Many Solutions? Welcome to the Null Space</a></li><li><a href="#the-black-hole-of-matrices-what-gets-pulled-in-and-lost">The Black Hole of Matrices: What Gets Pulled In and Lost</a></li><li><a href="#what-exactly-is-the-null-space">What Exactly Is the Null Space?</a></li><li><a href="#zooming-into-the-math">Zooming into the Math</a><ul><li><a href="#null-space-in-linear-regression">Null Space in Linear Regression</a></li><li><a href="#null-space-of-projection-matrix">Null Space of Projection Matrix</a></li></ul></li></ul>
+              <ul class="toc__menu"><li><a href="#lets-start-with-a-question">Let’s Start with a Question!</a></li><li><a href="#too-many-solutions-welcome-to-the-null-space">Too Many Solutions? Welcome to the Null Space</a></li><li><a href="#the-black-hole-of-matrices-what-gets-pulled-in-and-lost">The Black Hole of Matrices: What Gets Pulled In and Lost</a></li><li><a href="#what-exactly-is-the-null-space">What Exactly Is the Null Space?</a></li><li><a href="#zooming-into-the-math">Zooming into the Math</a><ul><li><a href="#null-space-in-linear-regression">Null Space in Linear Regression</a></li><li><a href="#null-space-of-projection-matrix">Null Space of Projection Matrix</a></li></ul></li><li><a href="#conclusion">Conclusion</a></li></ul>
             </nav>
           </aside>
         
@@ -507,6 +507,10 @@ z
       \end{bmatrix} \,\bigg|\, z \in \mathbb{R} \right\}\]
 
 <p>Here, key interpretation is that any moveement purely along the $z$-axis produce no change at all in the projected 2D output. Therefore, $z$-direction is invisible to the matrix $T$.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>The null space reveals the hidden redundancies in your data—the directions along which change produces no effect. Whether it’s multicollinearity in regression, information lost in projection, or multiple solutions to a system, understanding the null space tells you where your matrix is “blind.” For practitioners, a non-trivial null space is a red flag: it signals dependent features, rank deficiency, and the need to either remove redundant information or embrace the freedom of multiple solutions. By recognizing these invisible directions, you gain the insight to build more robust models and interpret their limitations.</p>
 
         
       </section>
