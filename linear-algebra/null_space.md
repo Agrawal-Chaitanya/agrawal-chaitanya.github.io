@@ -1,7 +1,7 @@
 ---
 title: "Understanding the Null Space – From Geometry to ML Applications"
 layout: single
-permalink: /linear-algebra/subspaces/
+permalink: /linear-algebra/null-space/
 toc: true
 toc_label: "On this page"
 toc_sticky: true

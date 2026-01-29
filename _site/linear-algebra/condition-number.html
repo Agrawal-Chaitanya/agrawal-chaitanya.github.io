@@ -1,0 +1,746 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.27.1 by Michael Rose
+  Copyright 2013-2025 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="en-US" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Condition Number - Intuitive Maths</title>
+<meta name="description" content="A website to learn maths intuitively">
+
+
+  <meta name="author" content="Chaitanya Agrawal">
+  
+
+
+<meta property="og:type" content="website">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Intuitive Maths">
+<meta property="og:title" content="Condition Number">
+<meta property="og:url" content="http://localhost:4000/linear-algebra/condition-number">
+
+
+  <meta property="og:description" content="A website to learn maths intuitively">
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="http://localhost:4000/linear-algebra/condition-number">
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Intuitive Maths Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Intuitive Maths
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="https://mmistakes.github.io/minimal-mistakes/docs/quick-start-guide/"
+                
+                
+              >Quick-Start Guide</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+<script>
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      displayMath: [['$$', '$$'], ['\\[', '\\]']],
+      packages: ['base', 'ams']
+    },
+    loader: {
+      load: ['[tex]/ams']
+    },
+    svg: {
+      fontCache: 'global'
+    }
+  };
+</script>
+<script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+</script>
+
+
+
+
+
+
+
+
+<div id="main" role="main">
+  
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Condition Number">
+    
+    
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">
+            <a href="http://localhost:4000/linear-algebra/condition-number" itemprop="url">Condition Number
+</a>
+          </h1>
+          
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On this page</h4></header>
+              <ul class="toc__menu"><li><a href="#the-steering-wheel-analogy">The Steering Wheel Analogy</a></li><li><a href="#bridging-the-gap-from-cars-to-matrices">Bridging the Gap: From Cars to Matrices</a><ul><li><a href="#example-of-an-ill-conditioned-system">Example of an Ill-Conditioned System</a></li></ul></li><li><a href="#properties-of-condition-number">Properties of Condition Number</a><ul><li><a href="#decomposition-of-ill-conditioning-obsidian-notes">Decomposition of ill-conditioning (obsidian notes)</a></li></ul></li><li><a href="#geometric-interpretation">Geometric Interpretation</a><ul><li><a href="#introducing-maximum-and-minimum-magnification">Introducing Maximum and Minimum Magnification</a></li><li><a href="#from-magnification-to-condition-number">From Magnification to Condition Number</a></li></ul></li><li><a href="#when-is-a-condition-number-too-large">When Is a Condition Number “Too Large”?</a><ul><li><a href="#error-in-input-data">Error in Input Data</a></li><li><a href="#the-role-of-floating-point-precision">The Role of Floating-Point Precision</a></li></ul></li><li><a href="#ill-conditioning-caused-by-poor-scaling">Ill-Conditioning Caused by Poor Scaling</a></li></ul>
+            </nav>
+          </aside>
+        
+        <h2 id="the-steering-wheel-analogy">The Steering Wheel Analogy</h2>
+<p><em>Imagine you are driving an old car where the steering wheel is so ‘loose’ that a tiny twitch of your hand sends your vehicle swerving into the adjacent lane. Or perhaps the opposite case, where the steering wheel is so ‘stiff’ that turning it halfway barely changes the direction of the car.</em>
+<br /></p>
+
+<p>In both cases, there is a mismatch between your input (the turn of the wheel) and the output (the direction of the car). If a small adjustment leads to an uncontrollable shift, you’re dealing with an unstable system. To measure this instability, mathematicians rely on a single, crucial value known as the <strong>condition number</strong>.</p>
+
+<h2 id="bridging-the-gap-from-cars-to-matrices">Bridging the Gap: From Cars to Matrices</h2>
+
+<p>When we solve a problem, like a linear regression or a system of equations, we assume our data is perfect. But it never is. There’s always a little “noise” or a rounding error (the “twitch” on the steering wheel).</p>
+
+<p>Let’s consider a system of equations $Ax=b$, where $A \in \mathbb{R}^{n \times n}$ is square, invertible matrix and $b$ is non-zero. There is a unique solution $x$, which is non-zero. Now we are pertubing the input $b$ by $\delta b$ to get the following perturbed system:</p>
+
+\[A \hat{x}=b+\delta{b}\]
+
+<p>where, 
+$\hat{x}=x+\delta{x}$.</p>
+
+<p>Since the error $\delta{x}$ may be negligible or catastrophic depending on the magnitude of $x$, it is more meaningful to work with the relative error $\frac{\lVert \delta{x} \rVert}{\lVert x \rVert}$. Here, we use vector norm $\lVert \cdot \rVert$, to quantify the size of vectors and induced matrix norm to measure matrices. Similarly, the relative size of $\delta b$ with respect to $b$ is given by $\frac{\lVert \delta{b} \rVert}{\lVert b \rVert}$. The relationship between these relative errors is captured by the following inequality, which bounds how perturbations in the input $b$ propagate to the solution $x$.</p>
+
+\[\frac{\lVert \delta{x} \rVert}{\lVert x \rVert} \leq \lVert A \rVert \lVert A^{-1} \rVert \frac{\lVert \delta{b} \rVert}{\lVert b \rVert}\]
+
+<p>where, the factor $\lVert A \rVert \lVert A^{-1} \rVert$ is called the <strong>condition number of A, $\kappa(A)$</strong>, i.e.,</p>
+
+\[\kappa(A) = \lVert A \rVert \lVert A^{-1} \rVert \text{   } \cdots \rightarrow (1)\]
+
+<p>So, <strong>condition number</strong> ($\kappa$) is essentially the <strong>multiplier of error</strong>.</p>
+<ul>
+  <li><strong>A Low Condition Number (Near 1)</strong>: The steering is precise. A small error in your data ($=\frac{\lVert \delta{b} \rVert}{\lVert b \rVert}$) leads to a small, predictable error ($=\frac{\lVert \delta{x} \rVert}{\lVert x \rVert}$) in your result. Thus if $\kappa(A)$ is not too large, we say that problem is well-conditioned.</li>
+  <li><strong>A High Condition Number (e.g., 1,000+)</strong>: The steering is “loose” and dangerous. A tiny error in your data ($=\frac{\lVert \delta{b} \rVert}{\lVert b \rVert}$) is amplified into a massive error in your result ($=\frac{\lVert \delta{x} \rVert}{\lVert x \rVert}$). In other words, the sytem is very sensitive to perturbations in $b$. The problem is ill-conditioned. 
+<br /></li>
+</ul>
+
+<p><strong>NOTE</strong>: <em>A condition number of 1 represents the ideal scenario; however, what should be considered “high” or “problematic” depends upon a number of factors like the numerical precision of the computing environment, the amount of error which is tolerable, etc.</em></p>
+
+<h3 id="example-of-an-ill-conditioned-system">Example of an Ill-Conditioned System</h3>
+
+<p>Let 
+\(A = \begin{bmatrix} 
+1000 &amp; 998 \\
+999 &amp; 997 
+\end{bmatrix}\), then 
+\(A^{-1} = \begin{bmatrix} 
+-498.5 &amp; 499 \\
+499.5 &amp; -500 
+\end{bmatrix}\)</p>
+
+<p>We see that $\kappa(A) = 1.99 \times 10^6$ <br /></p>
+
+<p>Now consider a linear system having $A$ as its coefficient matrix:</p>
+
+\[\begin{bmatrix} 
+1000 &amp; 998\\
+999 &amp; 997\\
+\end{bmatrix}
+
+\begin{bmatrix} x_1 \\
+                x_2
+                \end{bmatrix} =
+\begin{bmatrix} b_1 \\
+                b_2
+                \end{bmatrix}\]
+
+<p>This is a system of two linear equations:</p>
+
+\[1000x_1+998x_2=b_1\]
+
+\[999x_1 + 997x_2=b_2,\]
+
+<p>each of which represents a line in the plane. The slopes of the lines are:</p>
+
+<p>$m_1 \approx -1000/998 \approx -1.002004008016$ <br />
+$m_2 \approx -999/997 \approx -1.002006018054$ <br /></p>
+
+<p>Thus the solution of the system (point ‘a’) is the intersection of two nearly parallel lines. Now, let’s make a small perturbation in the first line, which will cause a parallel shift in the line. The new perturbed line is denoted by dashed line. Since both lines are almost parallel, even a small shift in any of the lines cause a drastic shift in the solution from point ‘a’ to ‘b’ (as shown in figure below).</p>
+
+<p>This shows that this system of equations or the given matrix $A$ is ill-conditioned, as also suggested by very high condition number.</p>
+
+<p align="center">
+<img src="/linear-algebra/images/condition_number-parallel_lines.jpg" />
+</p>
+
+<p>The geometric picture above explains <em>what</em> goes wrong, but not yet <em>why</em> it goes wrong at a deeper level.<br />
+The instability does not arise merely because the two lines are almost parallel; near-parallelism is only a <strong>geometric symptom</strong> of a more fundamental property of the matrix (A).</p>
+
+<p>Specifically, an ill-conditioned matrix acts very differently on different directions in the input space.<br />
+Some directions are strongly amplified, while others are barely changed. When the right-hand side (b) is perturbed along these sensitive directions, the solution (x) can change dramatically, even if the perturbation itself is small.</p>
+
+<p>To make this precise, we now shift our viewpoint from intersecting lines to how a matrix transforms vectors in different directions.</p>
+
+<blockquote>
+  <p>A large condition number means the matrix treats different directions very unevenly.</p>
+</blockquote>
+
+<p>In other words, a matrix has a large condition number if it stretches unit vectors by very different amounts depending on their direction, strongly amplifying some directions while almost annihilating others.</p>
+
+<p>Let’s use the above matrix $A$ to explain aforementioned statement:</p>
+
+<p>For 
+\(A = \begin{bmatrix} 
+1000 &amp; 998 \\
+999 &amp; 997 
+\end{bmatrix}\)</p>
+<ul>
+  <li>Direction of $x: (1, 1)$</li>
+</ul>
+
+\[A(1, 1) = (1998, 1996) \implies \text{ large magnitude}\]
+
+<ul>
+  <li>Direction of $x: (1, -1)$</li>
+</ul>
+
+\[A(1, -1) = (2, 2) \implies \text{ small magnitude}\]
+
+<p><strong>Here, we see that same length inputs have been transformed to wildly different outputs based on the direction of the input.</strong></p>
+
+<p><br />
+Now, if we look at the same problem from a different perspective, i.e., how perturbations in different directions of $b$ affect the solution $x$.</p>
+
+<p>We can check the same using following equation:</p>
+
+\[\delta{x} = A^{-1}\delta{b}\]
+
+<p>For:</p>
+<ul>
+  <li>$\delta{b} = (1, 1) \implies \delta{x} = \begin{bmatrix} 0.5 \ -0.5 \end{bmatrix} \implies \lVert \delta{x} \rVert \approx 0.71 \implies \text{least change}$</li>
+  <li>$\delta{b} = (1, 0) \implies \delta{x} = \begin{bmatrix} -498.5 \ 499.5 \end{bmatrix} \implies \lVert \delta{x} \rVert \approx 705 \implies \text{large change}$</li>
+  <li>$\delta{b} = (1, -1) \implies \delta{x} = \begin{bmatrix} -997.5 \ 999.5 \end{bmatrix} \implies \lVert \delta{x} \rVert \approx 1412 \implies \text{largest change}$</li>
+</ul>
+
+<p>We observe that the same directions identified above yield the largest and smallest perturbations in $x$ for a given magnitude of perturbation in $b$.</p>
+
+<p><em><strong>NOTE</strong>: We will cover matrix sensitivity analysis in detail in a separate post where we will discuss how these directions of least &amp; large impact on $x$ are calculated.</em></p>
+
+<h2 id="properties-of-condition-number">Properties of Condition Number</h2>
+<ul>
+  <li>
+    <p><strong>$\kappa(A) \geq 1$</strong>, for square invertible matrices <br /></p>
+
+    <p><strong>Proof</strong>: <br />
+ From $I = AA^{-1}$, we have: <br />
+ \(\lVert I \rVert = \lVert AA^{-1} \rVert \leq \lVert A \rVert \lVert A^{-1} \rVert\) <br /></p>
+
+    <p>Since $\lVert I \rVert = 1$, it follows that: <br />
+ \(\kappa(A) = \lVert A \rVert \lVert A^{-1} \rVert \geq 1\)</p>
+  </li>
+  <li>
+    <p><strong>$\kappa(cA) = \kappa(A)$</strong>, where $c$ is non-zero scalar</p>
+
+    <p><strong>Proof</strong>: <br />
+  \(\kappa(cA) = \lVert cA \rVert \lVert (cA)^{-1} \rVert = \lVert cA \rVert \lVert c^{-1}A^{-1} \rVert\)
+  \(= |c| \lVert A \rVert \cdot |c|^{-1} \lVert A^{-1} \rVert = \lVert A \rVert \lVert A^{-1} \rVert = \kappa(A)\)</p>
+  </li>
+  <li>
+    <p>$\kappa(A) = \kappa(A^{-1})$</p>
+
+    <p><strong>Proof</strong>: <br />
+  \(\kappa(A^{-1}) = \lVert A^{-1} \rVert \lVert (A^{-1})^{-1} \rVert = \lVert A^{-1} \rVert \lVert A \rVert\)
+  \(= \lVert A \rVert \lVert A^{-1} \rVert = \kappa(A)\)</p>
+  </li>
+</ul>
+
+<h3 id="decomposition-of-ill-conditioning-obsidian-notes">Decomposition of ill-conditioning (obsidian notes)</h3>
+
+<p>So far we have covered blah blah, but let’s look at the geometry of the transformation and also ways to calculate condition number using max &amp; min magnification</p>
+
+<h2 id="geometric-interpretation">Geometric Interpretation</h2>
+
+<p>A deeper understanding of the condition number emerges when we view a matrix as a geometric transformation.</p>
+
+<p>A matrix stretches unit vectors by different amounts depending on their direction, leading to maximum and minimum magnifications.<br />
+The condition number precisely measures this disparity. It is the ratio between the largest and smallest magnifications induced by the matrix.</p>
+
+<p>Now, to visualize these magnifications, let’s understand how a matrix transforms a unit circle and what it becomes?</p>
+
+<p>Let $A \in \mathbb{R}^{n \times n}$ be an invertible matrix. Consider the set</p>
+
+\[\{x \in \mathbb{R}^n\mid \lVert x \rVert_2=1  \}\]
+
+<p>For $n=2$, we get a unit circle with center at $\begin{pmatrix} 0 \ 0\end{pmatrix}$ and radius $1$.</p>
+
+<p>Then, the above set of $x$ can be represented as:</p>
+
+\[\left\{ \begin{pmatrix} x_1 \\ x_2 \end{pmatrix} \in \mathbb{R^2}: x_1^2 + x_2^2=1 \right\} \text{, (} \because x_1^2 + x_2^2 = \lVert x \rVert_2^2 = \lVert x \rVert_2 = 1 \text{)}\]
+
+<p>On applying matrix $A$ to $x$, we get:</p>
+
+\[\begin{align*}
+&amp;\Rightarrow A \begin{pmatrix} x_1 \\ x_2 \end{pmatrix} = \begin{pmatrix} y_1 \\ y_2 \end{pmatrix} \text{, such that} \begin{pmatrix} y_1 \\ y_2 \end{pmatrix} \in \mathbb{R}^2 \\
+&amp;\Rightarrow \begin{pmatrix} x_1 \\ x_2 \end{pmatrix} = A^{-1} \begin{pmatrix} y_1 \\ y_2 \end{pmatrix} = B \begin{pmatrix} y_1 \\ y_2 \end{pmatrix} \text{, where } B = A^{-1} \\
+&amp;\Rightarrow \begin{pmatrix} x_1 \\ x_2 \end{pmatrix}= B \begin{pmatrix} y_1 \\ y_2 \end{pmatrix} = \begin{bmatrix} \cdots  b_1^T \cdots \\ \cdots b_2^T \cdots \end{bmatrix} 
+\begin{pmatrix} y_1 \\ y_2 \end{pmatrix} \\
+&amp;\Rightarrow x_1 = b_1^Ty  \text{ &amp; } x_2 = b_2^Ty
+\end{align*}\]
+
+<p>Since we know: $ x_1^2 + x_2^2 = 1$</p>
+
+\[\begin{align*}
+&amp;\Rightarrow (b_1^Ty)^2 + (b_2^Ty)^2 = 1 \text{ } \cdots \rightarrow (2)
+\end{align*}\]
+
+<p>As we already know,</p>
+
+\[\begin{align*}
+&amp;b_1^T = \begin{pmatrix} b_{11} &amp; b_{12} \end{pmatrix} \\
+&amp;b_2^T = \begin{pmatrix} b_{21} &amp; b_{22} \end{pmatrix} \\
+&amp;y = \begin{pmatrix} y_{1} \\ y_{2} \end{pmatrix}
+\end{align*}\]
+
+<p>Putting values of $b_1^T \text{, } b_2^T \text{, }y$ in the equation $(2)$ described above, we get:</p>
+
+\[\begin{align*}
+&amp;\Rightarrow (b_{11}y_1 + b_{12}y_2)^2 + (b_{21}y_1 + b_{22}y_2)^2 = 1 \\
+&amp;\Rightarrow y_1^2(b_{11}^2+b_{21}^2) + y_2^2(b_{12}^2+b_{22}^2) + 2y_1y_2(b_{11}b_{12}+b_{21}b_{22}) = 1 \\
+&amp;\Rightarrow y_1^2\beta_1 + y_2^2\beta_2 + 2y_1y_2\alpha = 1 \text{ , where } \alpha \text{ , } \beta_1 \text{ , } \beta_2 \text{ are constants}
+\end{align*}\]
+
+<p>If you notice the above equation, it is an equation of an ellipse in $\mathbb{R}^2$. <br />
+It means a unit circle is getting transformed to an ellipse on the application of matrix $A$.</p>
+
+<p align="center">
+<img src="/linear-algebra/images/condition_number_circle_2_ellipse.jpg" style="width: 50%;" />
+</p>
+
+<h3 id="introducing-maximum-and-minimum-magnification">Introducing Maximum and Minimum Magnification</h3>
+
+<p>Once the unit circle is transformed into an ellipse, an important geometric fact becomes visible: <strong>not all directions are stretched equally</strong>.</p>
+
+<p>Some unit vectors are stretched the most, landing at the tips of the ellipse’s <strong>major axis</strong>, while others are stretched the least, landing at the ends of the <strong>minor axis</strong>.</p>
+
+<p>These two extreme stretch factors play a central role:</p>
+<ul>
+  <li>The <strong>maximum magnification</strong> is the <strong>largest length</strong> attained by $\lVert Ax \rVert$ among all unit vector $\lVert x \rVert_2 =1$</li>
+  <li>The <strong>minimum magnification</strong> is the <strong>smallest length</strong> attained by $\lVert Ax \rVert$ among all unit vector $\lVert x \rVert_2 =1$</li>
+</ul>
+
+<p><strong>Geometrically, they correspond exactly to the lengths of the major and minor semi-axes of the ellipse produced by applying $A$ to the unit circle.</strong></p>
+
+<p>Given below is the mathematical definitions of maximum &amp; minimum magnifications of $A \in \mathbb{R}^{n \times n}$ :</p>
+
+<ul>
+  <li>
+    <p><strong>Maximum Magnification</strong>:</p>
+
+\[\begin{equation}
+  maxmag(A) = \max_{\mathbf{x} \neq \mathbf{0}} \frac{\|A\mathbf{x}\|_2}{\|\mathbf{x}\|_2} = \max_{\|\mathbf{x}\|_2=1} \|A\mathbf{x}\|_2 = \|A\|_2 \text{   } \cdots \rightarrow (3)
+  \end{equation}\]
+
+    <p>corresponding to the length of the major semi-axis of the ellipse. <br />
+  Since matrix 2-norm is the largest factor by which a matrix $A$ can stretch a unit vector, maximum magnification is nothing but the induced matrix norm $\lVert A \rVert_2$. <a href="#appendix">Proof</a></p>
+  </li>
+  <li>
+    <p><strong>Minimum Magnification</strong>:</p>
+
+\[\begin{equation}
+  minmag(A) = \min_{\mathbf{x} \neq \mathbf{0}} \frac{\|A\mathbf{x}\|_2}{\|\mathbf{x}\|_2} = \min_{\|\mathbf{x}\|_2=1} \|A\mathbf{x}\|_2
+  \end{equation}\]
+
+    <p>corresponding to the length of the minor semi-axis of the ellipse.</p>
+  </li>
+</ul>
+
+<h3 id="from-magnification-to-condition-number">From Magnification to Condition Number</h3>
+
+<p>At this stage, the geometric picture is complete: the action of a matrix on the unit circle produces an ellipse whose major and minor semi-axes represent the largest and smallest possible stretchings of unit vectors.</p>
+
+<p>What remains is to understand how this geometric distortion affects the behavior of solutions when the input is perturbed.</p>
+
+<p>Conditioning is not determined by how much a matrix stretches vectors in absolute terms, but by <strong>how unevenly it stretches different directions</strong>. If all directions are stretched by nearly the same amount, small perturbations behave predictably.</p>
+
+<p>This directional imbalance is captured by comparing the two extremes.
+The condition number of a matrix is therefore defined as the ratio of its maximum to minimum magnification:</p>
+
+\[\kappa(A)_2 = \frac{maxmag(A)}{minmag(A)}= \frac{\max_{\|\mathbf{x}\|_2=1} \|A\mathbf{x}\|_2}{\min_{\|\mathbf{x}\|_2=1} \|A\mathbf{x}\|_2} = \frac{\text{Length of major axis}}{\text{Length of minor axis}}\]
+
+<p>The appearance of this ratio reflects the role of the inverse transformation. The ratio compares the largest and smallest magnifications induced by $A$. The largest magnification is governed directly by how much $A$ can stretch a unit vector, while the smallest magnification identifies directions that are strongly compressed by $A$.</p>
+
+<p>These compressed directions are exactly those along which small perturbations in $b$ lead to large changes in the solution $x$ when solving $Ax=b$. Recovering $x$ requires undoing this compression, and doing so demands strong expansion through the action of $A^{-1}$. Consequently, the smallest magnification of $A$ is controlled by the largest stretching of its inverse.</p>
+
+<p>This is why the condition number naturally involves both $A$ and $A^{-1}$. It measures the combined effect of the strongest forward stretching and the strongest expansion required to undo compression. In fact,</p>
+
+\[minmag(A)= \min_{\|\mathbf{x}\|_2=1} \|A\mathbf{x}\|_2 = \frac{1}{\max_{\|\mathbf{y}\|_2=1} \|A^{-1}\mathbf{y}\|_2} = \frac{1}{\|A^{-1}\|_2} \text{    } \cdots \rightarrow(4)\]
+
+<p>Using equation $(3)$ &amp; $(4)$, we see that condition number as given in equation $(1)$ can be derived, i.e.,</p>
+
+\[\kappa(A)_2 = \frac{maxmag(A)}{minmag(A)} = \|A\|_2\|A^{-1}\|_2\]
+
+<p>Also,</p>
+
+\[maxmag(A^{-1}) = \frac{1}{minmag(A)}\]
+
+\[\therefore \kappa(A)_2 = maxmag(A)*maxmag(A^{-1})\]
+
+<p>Geometrically, the condition number measures how elongated the ellipse is relative to the original unit circle.</p>
+
+<p>A nearly circular ellipse indicates that all directions are treated similarly, whereas a highly elongated ellipse indicates strong directional imbalance and heightened sensitivity to perturbations.</p>
+
+<h2 id="when-is-a-condition-number-too-large">When Is a Condition Number “Too Large”?</h2>
+
+<p>So far, we have said that a matrix with a large condition number is ill-conditioned. However, this immediately raises an important and practical question:</p>
+
+<p><strong>Where exactly is the boundary between well-conditioned and ill-conditioned systems?</strong></p>
+
+<p>The short answer is: <strong>there is no sharp cutoff.</strong></p>
+
+<p>Conditioning is inherently <strong>context-dependent</strong>. Whether a given condition number is acceptable or problematic depends on several factors, including:</p>
+
+<ul>
+  <li>the accuracy with which the input data is known,</li>
+  <li>the precision of the floating-point arithmetic used in computation, and</li>
+  <li>the amount of error we are willing to tolerate in the solution.</li>
+</ul>
+
+<p>To see this concretely, recall the fundamental perturbation bound for the linear system $Ax=b$:</p>
+
+\[\frac{\|\delta{x}\|}{\|x\|} \leq \kappa(A) \frac{\|\delta{b}\|}{\|b\|}\]
+
+<p>This inequality tells us that the condition number acts as an upper bound on error amplification, i.e.,  relative errors in the input $b$ can be magnified by a factor as large as $\kappa(A)$ in the computed solution $x$.</p>
+
+<h3 id="error-in-input-data">Error in Input Data</h3>
+<p>For example, suppose the components of $b$ are known to about four decimal places, meaning that we solve the following perturbed system:</p>
+
+\[A(x + \delta{x}) = b + \delta{b}\]
+
+<p>where</p>
+
+\[\frac{\|\delta{b}\|}{\|b\|} \approx 10^{-4}\]
+
+<p>Now, suppose: $\kappa(A) \approx 10^{2},$</p>
+
+<p>then the worst that can happen is:</p>
+
+\[\frac{\|\delta{x}\|}{\|x\|} \approx 10^{-2}\]
+
+<p>In other words, the relative error in the solution is at most about $1\%$.
+In many scientific and engineering applications, this level of error is entirely acceptable, and the matrix would reasonably be considered <strong>well-conditioned</strong>.</p>
+
+<p>Now contrast this with a matrix for which $
+\kappa(A) \approx 10^{4}$</p>
+
+<p>Then with the same input accuracy of $b$, the bound becomes:</p>
+
+\[\frac{\|\delta{x}\|}{\|x\|} \approx 1\]
+
+<p>i.e., error in $x$ could be as big as the $x$ itself. At this point, the computed result may be meaningless, and the matrix must be regarded as <strong>ill-conditioned</strong>.</p>
+
+<p>This simple comparison suggests that in this problem the boundary between well-conditioned and ill-conditioned matrices lies somewhere in the range $10^2$ to $10^4$.</p>
+
+<h3 id="the-role-of-floating-point-precision">The Role of Floating-Point Precision</h3>
+<p>Sometimes, the dominant limitation is not the accuracy of the data, but the accuracy of the floating-point arithmetic itself.</p>
+
+<p>Even if $b$ were known exactly, numbers in a computer are stored with finite precision. For example, if numbers are only stored with precision of <strong>seven decimal digits</strong> in the computer, so rounding errors effectively introduce a perturbation of size</p>
+
+\[\frac{\|\delta{b}\|}{\|b\|} \approx 10^{-7}\]
+
+<p>Then, if we have $\kappa(A) \approx 10^7$, then the error bound predicts:</p>
+
+\[\frac{\|\delta{x}\|}{\|x\|} \lesssim 1\]
+
+<p>meaning that we can not be sure to get a reliable answer, even if we solve the system very accurately.</p>
+
+<p>On the other hand, depending on how accurate a solution is required to be, condition numbers of $10^3, 10^4,$ or even $10^5$ may be small enough, depending on how accurate we want the solution to be.</p>
+
+<p><strong>The key takeaway is that conditioning is not an absolute property</strong>.</p>
+
+<p>A condition number that is unacceptable in one setting may be entirely harmless in another. What matters is the interaction between:</p>
+
+<ul>
+  <li>data accuracy,</li>
+  <li>numerical precision, and</li>
+  <li>error tolerance.</li>
+</ul>
+
+<p>This is why numerical analysts avoid rigid thresholds and instead interpret condition numbers <strong>relative to the problem at hand</strong>.</p>
+
+<h2 id="ill-conditioning-caused-by-poor-scaling">Ill-Conditioning Caused by Poor Scaling</h2>
+
+<p>Not all ill-conditioned systems are ill-conditioned because of deep geometric reasons such as near-parallel rows or directions of extreme stretching.
+Sometimes, ill-conditioning appears <strong>simply because the system is poorly scaled</strong>.</p>
+
+<p>i.e., the variables or equations operate at very different numerical magnitudes.</p>
+
+<p><strong>A simple example</strong>:</p>
+
+<p>Consider the linear system</p>
+
+\[\begin{bmatrix} 1 &amp; 0\\
+                0 &amp; \epsilon  \end{bmatrix} 
+\begin{bmatrix} x_1\\
+                x_2   \end{bmatrix}=
+\begin{bmatrix} 1 \\
+                \epsilon  \end{bmatrix}, \epsilon \ll 1\]
+
+<p>The unique solution is: \(x =\begin{bmatrix} 1 \\
+                            1  \end{bmatrix}\)</p>
+
+<p>Despite this perfectly reasonable solution, the coefficient matrix is <strong>ill-conditioned when $\epsilon \ll 1$</strong>. <br />
+In fact:</p>
+
+\[\kappa_2(A)= \frac{1}{\epsilon}\]
+
+<p>As $\epsilon$ becomes small, the condition number becomes very large.</p>
+
+<p>This system therefore exhibits all the familiar symptoms of ill-conditioning.</p>
+
+<p>Now perturb only the second component of $b$:</p>
+
+\[\delta{b} = \begin{bmatrix} 0 \\ \epsilon \end{bmatrix}, \text{ }b + \delta{b} = \begin{bmatrix} 1 \\ 2\epsilon \end{bmatrix}\]
+
+<p>Now, measuring relative perturbation in $b$:</p>
+
+\[\frac{\|\delta{b}\|}{\|b\|} \approx \epsilon \text{, which is very small,}\]
+
+<p>yet the new solution becomes</p>
+
+\[x + \delta{x} = \begin{bmatrix} 1 \\ 2 \end{bmatrix}\]
+
+<p>which is far from the original solution $\begin{bmatrix} 1 \ 1 \end{bmatrix}$.</p>
+
+<p>Here, we notice that perturbation in $b$ is small relative to $|b|$, but <strong>not small relative to the component that was perturbed</strong>, i.e., $b_{21}$.</p>
+
+<p>Now, if we rescale the by second equation by dividing it by $\epsilon$, the system becomes:</p>
+
+\[\begin{bmatrix} 1 &amp; 0\\
+                0 &amp; 1  \end{bmatrix} 
+\begin{bmatrix} x_1\\
+                x_2   \end{bmatrix}=
+\begin{bmatrix} 1 \\
+                1  \end{bmatrix},\]
+
+<p>which is <strong>perfectly well-conditioned</strong>.</p>
+
+<p>Nothing about the underlying solution changed.
+The apparent <strong>ill-conditioning was entirely due to poor scaling</strong>, not to any intrinsic instability in the problem itself.</p>
+
+<p><strong>Column &amp; Row Scaling</strong></p>
+
+<p>Let $A$ be any non-singular matrix with columns $a_1, a_2, a_3, … , a_n$, then</p>
+
+\[\kappa_p(A) \geq \frac{\|a_i\|_p}{\|a_j\|_p}, \text{ } 1 \leq p \leq \infty\]
+
+<p>This inequality tell us that if the ratio of the lengths of the columns is very large, then the condition number is going to be very high, which implies the matrix is ill-conditioned.</p>
+
+<p>The same statement applies to rows as well, since a <strong>matrix is ill-conditioned if and only if its transpose is ill-conditioned</strong> (i.e., $\kappa_2(A) = \kappa_2(A^T)$).</p>
+
+<blockquote>
+  <p>Therefore, a necessary condition for a matrix to be well-conditioned is that all of its rows and columns have roughly the same magnitude.</p>
+</blockquote>
+
+<p>This condition, however, is <strong>not sufficient</strong>.
+Even well-scaled matrices can be ill-conditioned for deeper geometric reasons, as we have already seen.</p>
+
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/tags/#linear-algebra" class="page__taxonomy-item p-category" rel="tag">Linear Algebra</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/categories/#mathematics" class="page__taxonomy-item p-category" rel="tag">Mathematics</a>
+    
+    </span>
+  </p>
+
+
+        
+
+      </footer>
+
+      
+
+      
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+      
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2026 <a href="http://localhost:4000">Intuitive Maths</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>
