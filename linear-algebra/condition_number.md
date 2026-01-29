@@ -185,8 +185,6 @@ We observe that the same directions identified above yield the largest and small
     $$= \lVert A \rVert \lVert A^{-1} \rVert = \kappa(A)$$
 
 ### Decomposition of ill-conditioning (obsidian notes)
-### Discuss how Cond Numb is subjective Pg 125 & 126 (FMC)
-
 
 So far we have covered blah blah, but let's look at the geometry of the transformation and also ways to calculate condition number using max & min magnification
 
@@ -526,61 +524,3 @@ This condition, however, is **not sufficient**.
 Even well-scaled matrices can be ill-conditioned for deeper geometric reasons, as we have already seen.
 
 
-https://chatgpt.com/s/t_69711fabbc4c8191a4ee2f862007d7c3
-
-
-
-
-
-
-
-
-Next: https://chatgpt.com/s/t_696fe15315588191a763c9b8704dee89
-
-
-
-“To make this concrete, consider how a matrix transforms the unit circle…”
-
-Consider a unit cirecle, ...... Check whether some information from either of the two options given below can be used.
-First we will show transformation of circle to ellipse. Then we will introduce magnifications based condition number and then proof of the magnification
-
-Option 2 (slightly more visual, prepares circle → ellipse)
-
-Geometrically, a matrix does not distort all directions equally.
-When a matrix acts on unit-length vectors, some directions are stretched the most (maximum magnification) while others are stretched the least (minimum magnification).
-The condition number quantifies how uneven this directional stretching is, linking algebraic sensitivity directly to geometric distortion.
-
-Option 3 (explicitly sets up the unit circle)
-
-To understand why a matrix amplifies errors, it helps to study how it transforms geometry.
-When a matrix acts on the unit circle, it stretches it into an ellipse, whose longest and shortest axes correspond to the maximum and minimum magnifications of the transformation.
-The condition number is simply the ratio of these two magnifications.
-
-
-- First derive 2-Norm from max magnification & min magnification
-- Explain intuitively the above point
-- How Ax transforms the vector x and A-1 undo the transformation. Check book Fundamen
-- From circle to ellipse
-- Condition Nunber = maxmag(A)/minmag(A)
-- Well-conditioned matrix preserves shape
-
-    https://chatgpt.com/s/t_69651ed618c08191be5c0b1311050c3a
-    https://chatgpt.com/s/t_69651ee3541481919e45bed6074f8d03
-    https://chatgpt.com/s/t_69651eedec1881919c55dccc157e8f6e
-
-- A large condition number means the matrix treats different directions very unevenly.
-
-
-### Example 2.2.16
-### Ill-conditioning due to poor scaling (Pg 130 - FMC)
-
-### Condition Number in Multicollienarity
-- Presence of condition number in statsmodel summary
-
-- "weak" directions is the property of feature matrix. Therefore, changes in beta along this "weak" directions causes large swings in beta but with negligible change in prediction
-    https://chatgpt.com/s/t_6962af95956c819184f44c467cab4ec2
-    https://chatgpt.com/s/t_6962afb41a4c8191a8e4a211928d1ad8
-
-## Appendix
-
-All proofs will be placed in this section, including 'Properties' sections proofs
