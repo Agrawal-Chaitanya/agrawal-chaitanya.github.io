@@ -6,7 +6,5 @@ permalink: /linear-algebra/
 
 Welcome to Linear Algebra! Explore the topics below:
 
-- [Null Space]({{ '/linear-algebra/null-space/' | relative_url }})
-- [Condition Number]({{ '/linear-algebra/condition-number/' | relative_url }})
-- [Eigenvalues and Eigenvectors]({{ '/linear-algebra/eigenvalues/' | relative_url }})
-- [Matrix Decomposition]({{ '/linear-algebra/matrix-decomposition/' | relative_url }})
+- [Understanding the Null Space – From Geometry to ML Applications]({{ '/linear-algebra/null-space/' | relative_url }})
+- [Condition Number: What Makes Linear Systems Fragile?]({{ '/linear-algebra/condition_number/' | relative_url }})
