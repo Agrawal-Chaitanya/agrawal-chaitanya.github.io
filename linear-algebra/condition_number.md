@@ -1,7 +1,7 @@
 ---
 title: "Condition Number: What Makes Linear Systems Fragile?"
 layout: single
-permalink: /linear-algebra/condition_number
+permalink: /linear-algebra/condition-number/
 toc: true
 toc_label: "On this page"
 toc_sticky: true
