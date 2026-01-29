@@ -328,3 +328,8 @@ $$
 $$
 
 Here, key interpretation is that any moveement purely along the $z$-axis produce no change at all in the projected 2D output. Therefore, $z$-direction is invisible to the matrix $T$.
+
+
+## Conclusion
+
+The null space reveals the hidden redundancies in your data—the directions along which change produces no effect. Whether it's multicollinearity in regression, information lost in projection, or multiple solutions to a system, understanding the null space tells you where your matrix is "blind." For practitioners, a non-trivial null space is a red flag: it signals dependent features, rank deficiency, and the need to either remove redundant information or embrace the freedom of multiple solutions. By recognizing these invisible directions, you gain the insight to build more robust models and interpret their limitations.

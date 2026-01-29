@@ -184,9 +184,6 @@ We observe that the same directions identified above yield the largest and small
     $$\kappa(A^{-1}) = \lVert A^{-1} \rVert \lVert (A^{-1})^{-1} \rVert = \lVert A^{-1} \rVert \lVert A \rVert$$
     $$= \lVert A \rVert \lVert A^{-1} \rVert = \kappa(A)$$
 
-### Decomposition of ill-conditioning (obsidian notes)
-
-So far we have covered blah blah, but let's look at the geometry of the transformation and also ways to calculate condition number using max & min magnification
 
 ## Geometric Interpretation 
 
@@ -523,4 +520,8 @@ The same statement applies to rows as well, since a **matrix is ill-conditioned 
 This condition, however, is **not sufficient**.
 Even well-scaled matrices can be ill-conditioned for deeper geometric reasons, as we have already seen.
 
+
+## Conclusion
+
+The condition number is far more than a mathematical abstraction—it is a practical diagnostic tool that reveals how fragile or robust a numerical computation truly is. Whether through geometric distortion (an elongated ellipse), near-parallel constraints, or simple poor scaling, a large condition number signals that small perturbations in input data can cascade into large errors in the solution. Yet conditioning is not absolute; whether a given condition number is acceptable depends entirely on the accuracy of your data, the precision of your computing environment, and your tolerance for error. By understanding and computing condition numbers before solving a system, you gain the foresight to either reformulate the problem, rescale variables, or adjust your expectations for solution accuracy. In essence, the condition number transforms the invisible into the visible, turning "numerical fragility" into a quantifiable, actionable measure.
 

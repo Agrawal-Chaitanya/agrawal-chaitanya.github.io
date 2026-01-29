@@ -214,7 +214,7 @@
           <aside class="sidebar__right sticky">
             <nav class="toc">
               <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On this page</h4></header>
-              <ul class="toc__menu"><li><a href="#the-steering-wheel-analogy">The Steering Wheel Analogy</a></li><li><a href="#bridging-the-gap-from-cars-to-matrices">Bridging the Gap: From Cars to Matrices</a><ul><li><a href="#example-of-an-ill-conditioned-system">Example of an Ill-Conditioned System</a></li></ul></li><li><a href="#properties-of-condition-number">Properties of Condition Number</a><ul><li><a href="#decomposition-of-ill-conditioning-obsidian-notes">Decomposition of ill-conditioning (obsidian notes)</a></li></ul></li><li><a href="#geometric-interpretation">Geometric Interpretation</a><ul><li><a href="#introducing-maximum-and-minimum-magnification">Introducing Maximum and Minimum Magnification</a></li><li><a href="#from-magnification-to-condition-number">From Magnification to Condition Number</a></li></ul></li><li><a href="#when-is-a-condition-number-too-large">When Is a Condition Number “Too Large”?</a><ul><li><a href="#error-in-input-data">Error in Input Data</a></li><li><a href="#the-role-of-floating-point-precision">The Role of Floating-Point Precision</a></li></ul></li><li><a href="#ill-conditioning-caused-by-poor-scaling">Ill-Conditioning Caused by Poor Scaling</a></li></ul>
+              <ul class="toc__menu"><li><a href="#the-steering-wheel-analogy">The Steering Wheel Analogy</a></li><li><a href="#bridging-the-gap-from-cars-to-matrices">Bridging the Gap: From Cars to Matrices</a><ul><li><a href="#example-of-an-ill-conditioned-system">Example of an Ill-Conditioned System</a></li></ul></li><li><a href="#properties-of-condition-number">Properties of Condition Number</a></li><li><a href="#geometric-interpretation">Geometric Interpretation</a><ul><li><a href="#introducing-maximum-and-minimum-magnification">Introducing Maximum and Minimum Magnification</a></li><li><a href="#from-magnification-to-condition-number">From Magnification to Condition Number</a></li></ul></li><li><a href="#when-is-a-condition-number-too-large">When Is a Condition Number “Too Large”?</a><ul><li><a href="#error-in-input-data">Error in Input Data</a></li><li><a href="#the-role-of-floating-point-precision">The Role of Floating-Point Precision</a></li></ul></li><li><a href="#ill-conditioning-caused-by-poor-scaling">Ill-Conditioning Caused by Poor Scaling</a></li><li><a href="#conclusion">Conclusion</a></li></ul>
             </nav>
           </aside>
         
@@ -379,10 +379,6 @@ Now, if we look at the same problem from a different perspective, i.e., how pert
   \(= \lVert A \rVert \lVert A^{-1} \rVert = \kappa(A)\)</p>
   </li>
 </ul>
-
-<h3 id="decomposition-of-ill-conditioning-obsidian-notes">Decomposition of ill-conditioning (obsidian notes)</h3>
-
-<p>So far we have covered blah blah, but let’s look at the geometry of the transformation and also ways to calculate condition number using max &amp; min magnification</p>
 
 <h2 id="geometric-interpretation">Geometric Interpretation</h2>
 
@@ -669,6 +665,10 @@ The apparent <strong>ill-conditioning was entirely due to poor scaling</strong>,
 
 <p>This condition, however, is <strong>not sufficient</strong>.
 Even well-scaled matrices can be ill-conditioned for deeper geometric reasons, as we have already seen.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>The condition number is far more than a mathematical abstraction—it is a practical diagnostic tool that reveals how fragile or robust a numerical computation truly is. Whether through geometric distortion (an elongated ellipse), near-parallel constraints, or simple poor scaling, a large condition number signals that small perturbations in input data can cascade into large errors in the solution. Yet conditioning is not absolute; whether a given condition number is acceptable depends entirely on the accuracy of your data, the precision of your computing environment, and your tolerance for error. By understanding and computing condition numbers before solving a system, you gain the foresight to either reformulate the problem, rescale variables, or adjust your expectations for solution accuracy. In essence, the condition number transforms the invisible into the visible, turning “numerical fragility” into a quantifiable, actionable measure.</p>
 
 
         
